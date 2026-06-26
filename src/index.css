@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800;900&family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-base:            #F4F3ED;
+    --bg-surface:         #FFFFFF;
+    --brand-red:          #DD3A34;
+    --brand-cobalt:       #0648D7;
+    --brand-green:        #328045;
+    --accent-yellow:      #FDC631;
+    --accent-yellow-hover:#E8B220;
+    --accent-warm:        #F2763A;
+    --purple:             #9273E4;
+    --text-dark:          #1A1A2E;
+    --text-muted:         #6B6B8A;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-dark);
+    font-family: 'Be Vietnam Pro', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@keyframes skeletonShimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px) rotate(-2deg); }
+  50%       { transform: translateY(-8px) rotate(2deg); }
+}
+@keyframes pulse-ring {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(253,198,49,0.5); }
+  50%       { box-shadow: 0 0 0 18px rgba(253,198,49,0); }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes blob {
+  0%,100% { border-radius: 60% 40% 54% 46% / 52% 48% 52% 48%; }
+  33%     { border-radius: 44% 56% 36% 64% / 56% 44% 60% 40%; }
+  66%     { border-radius: 52% 48% 60% 40% / 40% 60% 44% 56%; }
+}
+
+.animate-float      { animation: floatY 4s ease-in-out infinite; }
+.animate-float-slow { animation: floatSlow 6s ease-in-out infinite; }
+.animate-pulse-ring { animation: pulse-ring 2.5s ease-in-out infinite; }
+.animate-marquee    { animation: marquee 30s linear infinite; }
+.animate-spin-slow  { animation: spin-slow 20s linear infinite; }
+.animate-blob       { animation: blob 8s ease-in-out infinite; }
+
+.font-display { font-family: 'Baloo 2', system-ui, sans-serif; }
+
+.card-hover {
+  transition: transform 0.5s cubic-bezier(0.32,0.72,0,1), box-shadow 0.5s cubic-bezier(0.32,0.72,0,1);
+}
+.card-hover:hover {
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 28px 60px rgba(0,0,0,0.12);
+}
+
+/* Double-bezel wrapper */
+.doppelrand {
+  padding: 6px;
+  border-radius: 28px;
+  background: rgba(255,255,255,0.6);
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.doppelrand-inner {
+  border-radius: calc(28px - 6px);
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.3);
+}
+
+/* Magnetic button base */
+.btn-magnetic {
+  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
+  will-change: transform;
+}
+.btn-magnetic:hover { transform: translateY(-3px) scale(1.03); }
+.btn-magnetic:active { transform: translateY(0) scale(0.98); }
+
+/* Embla Carousel */
+.embla { overflow: hidden; }
+.embla__container { display: flex; }
+.embla__slide { flex: 0 0 auto; min-width: 0; }
+
+@keyframes shimmer-slide {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(200%); }
+}
+.shimmer-line {
+  animation: shimmer-slide 2.2s ease-in-out infinite;
+}
