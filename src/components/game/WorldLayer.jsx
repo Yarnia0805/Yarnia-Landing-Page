@@ -10,7 +10,7 @@ extend({ Graphics })
 
 const SPARKLE_COUNT = 10
 
-export default function WorldLayer({ width, height }) {
+export default function WorldLayer({ width, height, speedRef }) {
   const cameraX = useRef(0)
   const clouds = useRef(initClouds(width, height))
   const sparkles = useRef(initSparkles(width, height))
@@ -18,7 +18,8 @@ export default function WorldLayer({ width, height }) {
 
   useTick((ticker) => {
     const dt = ticker.deltaTime
-    cameraX.current += 0.8 * dt
+    const mult = speedRef?.current ?? 1
+    cameraX.current += 0.8 * mult * dt
 
     clouds.current.forEach((c) => {
       c.x -= 0.3 * dt
