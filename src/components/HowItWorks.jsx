@@ -15,7 +15,7 @@ export default function HowItWorks() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 })
 
   return (
-    <section className="py-32 bg-white" ref={ref}>
+    <section className="py-32" style={{ background: 'rgba(255,255,255,0.35)', backdropFilter: 'blur(4px)' }} ref={ref}>
       <div className="max-w-6xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 28, filter: 'blur(6px)' }}
@@ -34,11 +34,11 @@ export default function HowItWorks() {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative items-stretch">
           {/* gradient connector line */}
           <div
             className="hidden lg:block absolute top-22 left-[calc(12.5%+28px)] right-[calc(12.5%+28px)] h-0.5 z-0"
-            style={{ background: 'linear-gradient(90deg, #FDC631 0%, #DD3A34 33%, #0648D7 66%, #328045 100%)', opacity: 0.4 }}
+            style={{ background: 'linear-gradient(90deg, #FDC631 0%, #DD3A34 33%, #0648D7 66%, #328045 100%)', opacity: 0.35 }}
           />
 
           {steps.map((step, i) => (
@@ -47,9 +47,9 @@ export default function HowItWorks() {
               initial={{ opacity: 0, y: 48, scale: 0.93 }}
               animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
               transition={{ duration: 0.65, delay: i * 0.13, ease: [0.22, 1, 0.36, 1] }}
-              className="relative z-10"
+              className="relative z-10 h-full"
+              whileHover={{ y: -8, transition: { type: 'spring', stiffness: 300, damping: 20 } }}
             >
-              {/* double-bezel step card */}
               <BorderGlow
                 backgroundColor="white"
                 borderRadius={24}
@@ -58,36 +58,45 @@ export default function HowItWorks() {
                 glowIntensity={0.85}
                 glowRadius={28}
                 edgeSensitivity={20}
-                style={{ boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.9), 0 4px 20px rgba(0,0,0,0.04)' }}
+                style={{ height: '100%', boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.9), 0 4px 20px rgba(0,0,0,0.04)' }}
               >
                 <SpotlightCard
                   spotlightColor={`${step.color}20`}
                   borderColor="transparent"
-                  className="rounded-[22px]"
+                  className="rounded-[22px] h-full"
                 >
-                <motion.div
-                  whileHover={{ y: -6 }}
-                  transition={{ type: 'spring', stiffness: 280, damping: 22 }}
-                  className="p-7 text-center"
-                >
-                  {/* emoji circle */}
-                  <div
-                    className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-5 border-4 border-white shadow-lg"
-                    style={{ background: step.color, boxShadow: `0 8px 24px ${step.color}50` }}
-                  >
-                    <span className="text-2xl">{step.emoji}</span>
+                <div className="p-7 text-center flex flex-col h-full">
+                  {/* pulse ring + emoji */}
+                  <div className="relative w-16 h-16 mx-auto mb-5">
+                    <motion.div
+                      className="absolute inset-0 rounded-full"
+                      style={{ background: step.color, opacity: 0.18 }}
+                      animate={{ scale: [1, 1.28, 1], opacity: [0.18, 0, 0.18] }}
+                      transition={{ duration: 2.4, repeat: Infinity, delay: i * 0.4, ease: 'easeInOut' }}
+                    />
+                    <div
+                      className="w-16 h-16 rounded-full flex items-center justify-center border-4 border-white shadow-lg relative z-10"
+                      style={{ background: step.color, boxShadow: `0 8px 24px ${step.color}50` }}
+                    >
+                      <span className="text-2xl">{step.emoji}</span>
+                    </div>
                   </div>
 
                   <div
-                    className="inline-flex items-center text-[10px] font-black px-2.5 py-1 rounded-full mb-4"
+                    className="inline-flex items-center text-[10px] font-black px-2.5 py-1 rounded-full mb-4 mx-auto"
                     style={{ background: `${step.color}18`, color: step.dark ? '#B8860B' : step.color }}
                   >
                     Bước {step.num}
                   </div>
 
-                  <h3 className="font-bold text-base text-[#1A1A2E] mb-2">{step.title}</h3>
-                  <p className="text-sm leading-relaxed" style={{ color: '#6B6B8A' }}>{step.desc}</p>
-                </motion.div>
+                  <h3 className="font-bold text-base text-[#1A1A2E] mb-3">{step.title}</h3>
+                  <p className="text-sm leading-relaxed flex-1" style={{ color: '#6B6B8A' }}>{step.desc}</p>
+
+                  {/* bottom accent line */}
+                  <div className="mt-5 h-0.5 rounded-full mx-auto w-12"
+                    style={{ background: `linear-gradient(90deg, ${step.gc[0]}, ${step.gc[1]})` }}
+                  />
+                </div>
                 </SpotlightCard>
               </BorderGlow>
             </motion.div>

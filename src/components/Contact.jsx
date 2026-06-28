@@ -7,8 +7,7 @@ import GridMotion from './backgrounds/GridMotion'
 
 const INTERESTS = ['Kho truyện', 'Kid Mode', 'Gamification', 'Báo cáo phụ huynh', 'Bảng giá']
 
-/* Replace this URL with your SheetDB endpoint when ready */
-const SHEETDB_URL = 'https://sheetdb.io/api/v1/YOUR_SHEETDB_ID'
+const SHEETDB_URL = import.meta.env.VITE_SHEETDB_URL ?? ''
 
 export default function Contact() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 })
@@ -30,11 +29,15 @@ export default function Contact() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           data: [{
+            type: 'contact',
             name: form.name,
             email: form.email,
             phone: form.phone,
             interest: form.interest,
             message: form.message,
+            feature_id: '',
+            feature_title: '',
+            reaction: '',
             date: new Date().toISOString(),
           }],
         }),

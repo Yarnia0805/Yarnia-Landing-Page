@@ -35,7 +35,7 @@ export default function CTA() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.2 })
 
   return (
-    <section ref={ref} className="py-32" style={{ background: 'var(--bg-base)' }}>
+    <section ref={ref} className="py-32" style={{ background: 'rgba(244,243,237,0.35)', backdropFilter: 'blur(4px)' }}>
       <div className="max-w-4xl mx-auto px-6">
         {/* outer shell */}
         <motion.div

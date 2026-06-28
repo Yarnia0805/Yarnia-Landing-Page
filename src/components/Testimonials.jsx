@@ -84,7 +84,7 @@ export default function Testimonials() {
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi])
 
   return (
-    <section className="py-32 overflow-hidden" style={{ background: '#F4F3ED' }} ref={ref}>
+    <section className="py-32 overflow-hidden" style={{ background: 'rgba(244,243,237,0.35)', backdropFilter: 'blur(4px)' }} ref={ref}>
       <div className="max-w-6xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 28 }}

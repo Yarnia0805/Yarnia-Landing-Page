@@ -44,25 +44,7 @@ function CountUp({ value, suffix, decimal, color }) {
 export default function Stats() {
   const canvasOk = useCanvasSupport()
   return (
-    <section className="py-16 relative overflow-hidden" style={{ background: '#1A1A2E' }}>
-      <div className="absolute inset-0 pointer-events-none">
-        {canvasOk && <FaultyTerminal
-          scale={1.0}
-          gridMul={[2, 1]}
-          digitSize={2.0}
-          timeScale={0.2}
-          tint="#9273E4"
-          scanlineIntensity={0.4}
-          glitchAmount={1.5}
-          flickerAmount={1.0}
-          noiseAmp={0.5}
-          brightness={0.3}
-          mouseReact={false}
-          pageLoadAnimation={false}
-          curvature={0}
-          style={{ position: 'absolute', inset: 0 }}
-        />}
-      </div>
+    <section className="py-16 relative overflow-hidden" style={{ background: 'rgba(244,243,237,0.35)', backdropFilter: 'blur(8px)' }}>
       <div className="relative z-10 max-w-5xl mx-auto px-6">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
           {stats.map((s, i) => (
@@ -74,7 +56,7 @@ export default function Stats() {
               transition={{ delay: i * 0.1, duration: 0.5 }}
             >
               <CountUp {...s}/>
-              <div className="text-sm font-semibold mt-1" style={{ color: 'rgba(255,255,255,0.55)' }}>{s.label}</div>
+              <div className="text-sm font-semibold mt-1" style={{ color: 'rgba(26,26,46,0.5)' }}>{s.label}</div>
             </motion.div>
           ))}
         </div>

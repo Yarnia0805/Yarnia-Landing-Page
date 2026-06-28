@@ -155,7 +155,7 @@ export function IPadFrame({ children, className = '' }) {
       {/* Camera */}
       <div className="absolute" style={{ left: '50%', top: 6, transform: 'translateX(-50%)', width: 8, height: 8, borderRadius: '50%', background: '#111', border: '1px solid rgba(255,255,255,0.06)' }}/>
 
-      <div style={{ borderRadius: 12, overflow: 'hidden', background: '#000' }}>
+      <div style={{ borderRadius: 12, overflow: 'hidden', background: '#F8F9FC', minWidth: 420 }}>
         {children}
       </div>
     </div>

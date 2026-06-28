@@ -21,7 +21,7 @@
   html { scroll-behavior: smooth; }
 
   body {
-    background: var(--bg-base);
+    background: transparent;
     color: var(--text-dark);
     font-family: 'Be Vietnam Pro', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;

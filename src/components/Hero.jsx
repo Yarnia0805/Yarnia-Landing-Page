@@ -74,7 +74,7 @@ export default function Hero() {
     <section
       ref={ref}
       className="relative min-h-[100dvh] flex items-center overflow-hidden pt-20"
-      style={{ background: 'var(--bg-base)' }}
+      style={{ background: 'rgba(244,243,237,0.15)' }}
     >
       {/* soft ambient blobs */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">

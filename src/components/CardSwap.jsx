@@ -37,6 +37,7 @@ const CardSwap = ({
   onCardClick,
   skewAmount = 6,
   easing = 'elastic',
+  forcedTop = null,
   children,
 }) => {
   const config =
@@ -50,6 +51,7 @@ const CardSwap = ({
   const tlRef = useRef(null)
   const intervalRef = useRef()
   const container = useRef(null)
+  const swapFnRef = useRef(null)
 
   useEffect(() => {
     const total = refs.length
@@ -57,6 +59,7 @@ const CardSwap = ({
 
     const swap = () => {
       if (order.current.length < 2) return
+
       const [front, ...rest] = order.current
       const elFront = refs[front].current
       const tl = gsap.timeline()
@@ -78,13 +81,14 @@ const CardSwap = ({
       tl.call(() => { order.current = [...rest, front] })
     }
 
+    swapFnRef.current = swap
     swap()
-    intervalRef.current = window.setInterval(swap, delay)
+    intervalRef.current = window.setInterval(() => swap(), delay)
 
     if (pauseOnHover) {
       const node = container.current
       const pause = () => { tlRef.current?.pause(); clearInterval(intervalRef.current) }
-      const resume = () => { tlRef.current?.play(); intervalRef.current = window.setInterval(swap, delay) }
+      const resume = () => { tlRef.current?.play(); intervalRef.current = window.setInterval(() => swap(), delay) }
       node.addEventListener('mouseenter', pause)
       node.addEventListener('mouseleave', resume)
       return () => {
@@ -95,6 +99,40 @@ const CardSwap = ({
     }
     return () => clearInterval(intervalRef.current)
   }, [cardDistance, verticalDistance, delay, pauseOnHover, skewAmount, easing])
+
+  // when forcedTop changes (non-null), instantly reposition cards so forcedTop is front
+  // do NOT call swap() — that would immediately drop the front card
+  useEffect(() => {
+    if (forcedTop === null) return
+    const total = refs.length
+    const cur = [...order.current]
+    const pos = cur.indexOf(forcedTop)
+    if (pos <= 0) return // already front or not found
+
+    // rotate order so forcedTop is at index 0
+    const newOrder = [...cur.slice(pos), ...cur.slice(0, pos)]
+    order.current = newOrder
+
+    // kill running animation, clear all gsap props, place all cards instantly
+    tlRef.current?.kill()
+    clearInterval(intervalRef.current)
+    gsap.killTweensOf(refs.map(r => r.current))
+    refs.forEach((r, cardIdx) => {
+      const slotIdx = newOrder.indexOf(cardIdx)
+      const slot = makeSlot(slotIdx, cardDistance, verticalDistance, total)
+      gsap.set(r.current, {
+        x: slot.x, y: slot.y, z: slot.z,
+        xPercent: -50, yPercent: -50,
+        skewY: skewAmount,
+        transformOrigin: 'center center',
+        zIndex: slot.zIndex,
+        force3D: true,
+      })
+    })
+
+    // resume auto-swap from new state
+    intervalRef.current = window.setInterval(() => swapFnRef.current(), delay)
+  }, [forcedTop])
 
   const rendered = childArr.map((child, i) =>
     isValidElement(child)

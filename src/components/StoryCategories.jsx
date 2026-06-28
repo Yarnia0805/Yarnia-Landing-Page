@@ -7,12 +7,18 @@ import SpotlightCard from './SpotlightCard'
 import { ArrowLeft, ArrowRight, Books } from '@phosphor-icons/react'
 
 const categories = [
-  { id: 'CO_TICH',    bg: '#0648D7', emoji: '🏰', title: 'Cổ Tích',    desc: 'Truyện dân gian Việt Nam và thế giới đầy màu sắc', count: '80+ truyện' },
-  { id: 'NGU_NGON',   bg: '#328045', emoji: '🦋', title: 'Ngụ Ngôn',   desc: 'Bài học cuộc sống qua những con vật đáng yêu', count: '60+ truyện' },
-  { id: 'THAN_THOAI', bg: '#9273E4', emoji: '✨', title: 'Thần Thoại', desc: 'Hành trình khám phá thần thoại Hy Lạp & Việt Nam', count: '45+ truyện' },
-  { id: 'KHOA_HOC',   bg: '#0099CC', emoji: '🔭', title: 'Khoa Học',   desc: 'Câu chuyện khoa học vui nhộn về vũ trụ kỳ diệu', count: '50+ truyện' },
-  { id: 'PHIEU_LUU',  bg: '#DD3A34', emoji: '🗺️', title: 'Phiêu Lưu', desc: 'Những chuyến phiêu lưu đến các vùng đất bí ẩn', count: '70+ truyện' },
-  { id: 'TRUYEN_CUOI',bg: '#FDC631', emoji: '😄', title: 'Truyện Cười',desc: 'Tiếng cười rộn rã với câu chuyện hài hước ý nghĩa', count: '55+ truyện', dark: true },
+  { id: 'CO_TICH',     bg: '#0648D7', emoji: '🏰', title: 'Cổ Tích',       desc: 'Truyện dân gian Việt Nam và thế giới đầy màu sắc', count: '80+ truyện' },
+  { id: 'NGU_NGON',    bg: '#328045', emoji: '🦋', title: 'Ngụ Ngôn',      desc: 'Bài học cuộc sống qua những con vật đáng yêu', count: '60+ truyện' },
+  { id: 'THAN_THOAI',  bg: '#9273E4', emoji: '✨', title: 'Thần Thoại',    desc: 'Hành trình khám phá thần thoại Hy Lạp & Việt Nam', count: '45+ truyện' },
+  { id: 'KHOA_HOC',    bg: '#0099CC', emoji: '🔭', title: 'Khoa Học',      desc: 'Câu chuyện khoa học vui nhộn về vũ trụ kỳ diệu', count: '50+ truyện' },
+  { id: 'PHIEU_LUU',   bg: '#DD3A34', emoji: '🗺️', title: 'Phiêu Lưu',   desc: 'Những chuyến phiêu lưu đến các vùng đất bí ẩn', count: '70+ truyện' },
+  { id: 'TRUYEN_CUOI', bg: '#FDC631', emoji: '😄', title: 'Truyện Cười',   desc: 'Tiếng cười rộn rã với câu chuyện hài hước ý nghĩa', count: '55+ truyện', dark: true },
+  { id: 'DONG_VAT',    bg: '#F2763A', emoji: '🐘', title: 'Động Vật',      desc: 'Thế giới muông thú kỳ diệu và những tình bạn đẹp', count: '65+ truyện' },
+  { id: 'LICH_SU',     bg: '#5B4FCF', emoji: '⚔️', title: 'Lịch Sử',     desc: 'Những anh hùng và sự kiện lịch sử hào hùng của Việt Nam', count: '40+ truyện' },
+  { id: 'MOI_TRUONG',  bg: '#2E8B57', emoji: '🌿', title: 'Môi Trường',   desc: 'Yêu thiên nhiên, bảo vệ Trái Đất qua những câu chuyện xanh', count: '35+ truyện' },
+  { id: 'AM_NHAC',     bg: '#C2185B', emoji: '🎵', title: 'Âm Nhạc',      desc: 'Truyện kể về âm nhạc, nhạc cụ và tình yêu nghệ thuật', count: '30+ truyện' },
+  { id: 'SIEU_ANH_HUNG', bg: '#1565C0', emoji: '🦸', title: 'Siêu Anh Hùng', desc: 'Những chiến binh nhỏ dũng cảm bảo vệ thế giới', count: '50+ truyện' },
+  { id: 'VIET_NAM',    bg: '#C62828', emoji: '🇻🇳', title: 'Việt Nam Tôi', desc: 'Văn hóa, phong tục và vẻ đẹp quê hương đất nước', count: '45+ truyện' },
 ]
 
 function CategoryCard({ cat, index, inView }) {
@@ -22,7 +28,7 @@ function CategoryCard({ cat, index, inView }) {
       animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
       transition={{ duration: 0.6, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
       className="embla__slide px-3"
-      style={{ flex: '0 0 300px' }}
+      style={{ flex: '0 0 clamp(260px, 22vw, 340px)' }}
     >
       {/* outer shell — double bezel */}
       <div
@@ -93,7 +99,7 @@ export default function StoryCategories() {
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi])
 
   return (
-    <section id="stories" className="py-32 bg-white overflow-hidden" ref={ref}>
+    <section id="stories" className="py-32 overflow-hidden" style={{ background: 'rgba(255,255,255,0.35)', backdropFilter: 'blur(4px)' }} ref={ref}>
       <div className="max-w-6xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 28 }}
@@ -133,14 +139,58 @@ export default function StoryCategories() {
           </div>
         </motion.div>
 
-        <div className="embla -mx-3" ref={emblaRef}>
-          <div className="embla__container">
-            {categories.map((cat, i) => (
-              <CategoryCard key={cat.id} cat={cat} index={i} inView={inView}/>
+      </div>
+
+      {/* Carousel full width — doubled for seamless loop */}
+      <div className="embla mt-0 px-6" ref={emblaRef}>
+        <div className="embla__container">
+          {[...categories, ...categories, ...categories, ...categories].map((cat, i) => (
+            <CategoryCard key={`${cat.id}-${i}`} cat={cat} index={i % categories.length} inView={inView}/>
+          ))}
+        </div>
+      </div>
+
+      {/* Marquee pill rows */}
+      <div className="mt-10 overflow-hidden">
+        <div className="flex items-center mb-3">
+          <div className="flex animate-marquee whitespace-nowrap">
+            {[...categories, ...categories, ...categories].map((cat, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full font-bold text-sm shrink-0 mx-2 cursor-pointer"
+                style={{
+                  background: cat.bg,
+                  color: cat.dark ? '#1A1A2E' : 'white',
+                  boxShadow: `0 4px 12px ${cat.bg}40`,
+                }}
+              >
+                <span className="text-base">{cat.emoji}</span>
+                {cat.title}
+              </div>
             ))}
           </div>
         </div>
+        <div className="flex items-center" style={{ direction: 'rtl' }}>
+          <div className="flex animate-marquee whitespace-nowrap" style={{ animationDuration: '36s' }}>
+            {[...categories, ...categories, ...categories].reverse().map((cat, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full font-bold text-sm shrink-0 mx-2 cursor-pointer"
+                style={{
+                  background: cat.bg,
+                  color: cat.dark ? '#1A1A2E' : 'white',
+                  boxShadow: `0 4px 12px ${cat.bg}40`,
+                }}
+              >
+                <span className="text-base">{cat.emoji}</span>
+                {cat.title}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
 
+      <div className="max-w-6xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}

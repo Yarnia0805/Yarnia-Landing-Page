@@ -204,8 +204,10 @@ export default function StoryReaderDemo() {
   const [playing, setPlaying]           = useState(false)
   const [progress, setProgress]         = useState(0)
   const [wordIdx, setWordIdx]           = useState(-1)
-  const [muted, setMuted]               = useState(false)
+  const [muted, setMuted]               = useState(true)
+  const [volume, setVolume]             = useState(0.8)
   const [speed, setSpeed]               = useState(1.0)
+  const [showVolume, setShowVolume]     = useState(false)
   const [fontSize, setFontSize]         = useState(1)
   const [bookmarked, setBookmarked]     = useState(false)
   const [showSettings, setShowSettings] = useState(false)
@@ -250,15 +252,16 @@ export default function StoryReaderDemo() {
   /* Phase sequence on inView */
   useEffect(() => {
     if (!inView || phase !== 'intro3d') return
-    /* 3D intro: MacBook flies in closed → lid opens → fade to CSS demo */
-    const t0 = setTimeout(() => setMacbook3DPhase('opening'), 800)
-    const t1 = setTimeout(() => {
-      /* transition: 3D fade out, CSS MacBook takes over */
+    /* 3D intro: MacBook flies in closed → lid opens → screen lights up → fade to CSS demo */
+    const t0 = setTimeout(() => setMacbook3DPhase('opening'), 1000)   // lid starts opening
+    const t1 = setTimeout(() => setMacbook3DPhase('typing'), 2600)    // screen content fades in fully
+    const t2 = setTimeout(() => {
+      /* transition: 3D fade out, CSS MacBook takes over for interaction */
       setShow3D(false)
       setPhase('opening')
-    }, 4000)
-    const t2 = setTimeout(() => setPhase('typing'), 5200)
-    return () => { clearTimeout(t0); clearTimeout(t1); clearTimeout(t2) }
+    }, 6000)
+    const t3 = setTimeout(() => setPhase('typing'), 7200)
+    return () => { clearTimeout(t0); clearTimeout(t1); clearTimeout(t2); clearTimeout(t3) }
   }, [inView])
 
   const handleUrlDone = useCallback(() => {
@@ -380,7 +383,7 @@ export default function StoryReaderDemo() {
 
   /* ── RENDER ── */
   return (
-    <section ref={ref} className="py-32 overflow-hidden" style={{ background: 'var(--bg-base)' }}>
+    <section ref={ref} className="py-32 overflow-hidden" style={{ background: 'rgba(244,243,237,0.35)', backdropFilter: 'blur(4px)' }}>
       <div className="max-w-6xl mx-auto px-6">
         {/* header */}
         <motion.div
@@ -415,15 +418,17 @@ export default function StoryReaderDemo() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: -20 }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              style={{ height: 560 }}
+              style={{ height: 860 }}
             >
               <Suspense fallback={
-                <div style={{ height: 560, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ height: 860, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <div style={{ width: 48, height: 48, border: '3px solid #0648D720', borderTopColor: '#0648D7', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }}/>
                 </div>
               }>
                 <MacBook3DScene
                   phase={macbook3DPhase}
+                  wordIdx={wordIdx}
+                  progress={progress}
                   style={{ width: '100%', height: '100%' }}
                 />
               </Suspense>
@@ -897,18 +902,99 @@ export default function StoryReaderDemo() {
                         </div>
 
                         {/* controls */}
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-1.5">
-                            <motion.button whileTap={{ scale: 0.88 }} onClick={() => { setMuted(m => !m); if (!muted) tts.stop(); else if (playing) speakPage(currentPage, speed) }}
-                              className="w-7 h-7 rounded-lg flex items-center justify-center"
-                              style={{ background: muted ? '#DD3A3412' : '#F4F3ED' }}>
-                              {muted ? <SpeakerNone size={12} color="#DD3A34" weight="bold"/> : <SpeakerHigh size={12} color="#6B6B8A" weight="duotone"/>}
-                            </motion.button>
-                            <span className="text-[9px] font-medium" style={{ color: '#9090B0' }}>
-                              {muted ? 'Tắt tiếng' : ttsSupported ? `TTS · ${speed}×` : `Giọng Nam · ${speed}×`}
-                            </span>
+                        <div className="flex items-center justify-between gap-2">
+
+                          {/* Volume button + tooltip + slider */}
+                          <div className="relative flex items-center gap-1.5">
+                            <div className="relative">
+                              <motion.button
+                                whileTap={{ scale: 0.88 }}
+                                onClick={() => {
+                                  const newMuted = !muted
+                                  setMuted(newMuted)
+                                  if (newMuted) tts.stop()
+                                  else if (playing) speakPage(currentPage, speed)
+                                  setShowVolume(!newMuted)
+                                }}
+                                className="w-7 h-7 rounded-lg flex items-center justify-center relative"
+                                style={{ background: muted ? '#DD3A3412' : '#F4F3ED' }}
+                              >
+                                {muted
+                                  ? <SpeakerNone size={12} color="#DD3A34" weight="bold"/>
+                                  : <SpeakerHigh size={12} color="#6B6B8A" weight="duotone"/>
+                                }
+                              </motion.button>
+
+                              {/* Tooltip khi muted */}
+                              {muted && (
+                                <motion.div
+                                  initial={{ opacity: 0, y: 4, scale: 0.92 }}
+                                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                                  className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 whitespace-nowrap z-50"
+                                  style={{ pointerEvents: 'none' }}
+                                >
+                                  <div className="px-2.5 py-1.5 rounded-lg text-[10px] font-semibold text-white shadow-lg"
+                                    style={{ background: '#1A1A2E', lineHeight: 1.4 }}>
+                                    🔊 Bật âm để nghe truyện
+                                    <div className="absolute top-full left-1/2 -translate-x-1/2"
+                                      style={{ width: 0, height: 0, borderLeft: '5px solid transparent', borderRight: '5px solid transparent', borderTop: '5px solid #1A1A2E' }}/>
+                                  </div>
+                                </motion.div>
+                              )}
+                            </div>
+
+                            {/* Volume slider — show khi unmuted */}
+                            {!muted && (
+                              <motion.div
+                                initial={{ width: 0, opacity: 0 }}
+                                animate={{ width: 52, opacity: 1 }}
+                                exit={{ width: 0, opacity: 0 }}
+                                className="flex items-center overflow-hidden"
+                              >
+                                <input
+                                  type="range" min={0} max={1} step={0.05}
+                                  value={volume}
+                                  onChange={e => {
+                                    setVolume(+e.target.value)
+                                    if (window.speechSynthesis) {
+                                      window.speechSynthesis.getVoices()
+                                    }
+                                  }}
+                                  className="w-full h-1 rounded-full appearance-none cursor-pointer"
+                                  style={{
+                                    accentColor: story.color,
+                                    background: `linear-gradient(to right, ${story.color} ${volume * 100}%, #E0DDD5 ${volume * 100}%)`,
+                                  }}
+                                />
+                              </motion.div>
+                            )}
                           </div>
 
+                          {/* Speed selector */}
+                          <div className="flex items-center gap-1">
+                            {[0.75, 1.0, 1.25, 1.5].map(s => (
+                              <motion.button
+                                key={s}
+                                whileTap={{ scale: 0.9 }}
+                                onClick={() => {
+                                  setSpeed(s)
+                                  if (playing && !muted) {
+                                    tts.stop()
+                                    setTimeout(() => speakPage(currentPage, s), 80)
+                                  }
+                                }}
+                                className="rounded-md text-[9px] font-bold px-1.5 py-0.5"
+                                style={{
+                                  background: speed === s ? story.color : '#F4F3ED',
+                                  color: speed === s ? '#fff' : '#6B6B8A',
+                                }}
+                              >
+                                {s}×
+                              </motion.button>
+                            ))}
+                          </div>
+
+                          {/* Playback buttons */}
                           <div className="flex items-center gap-2">
                             <motion.button whileTap={{ scale: 0.88 }} onClick={() => goPage(-1)}
                               disabled={safePageIdx === 0}
@@ -931,7 +1017,7 @@ export default function StoryReaderDemo() {
                             </motion.button>
                           </div>
 
-                          <div className="text-[9px] font-medium" style={{ color: '#9090B0' }}>
+                          <div className="text-[9px] font-medium shrink-0" style={{ color: '#9090B0' }}>
                             T.{safePageIdx + 1} · {story.duration}
                           </div>
                         </div>
