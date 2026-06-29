@@ -1,9 +1,10 @@
 import { extend, useTick, useApplication } from '@pixi/react'
 import { Container, Graphics } from 'pixi.js'
 import { useCallback, useRef, useState, useEffect } from 'react'
-import { drawWoolly } from './drawWoolly'
+import { drawWoolly, drawDeadWoolly } from './drawWoolly'
 import { drawButterfly } from './drawButterfly'
 import { WOLLY_X, getWoollyY } from './constants'
+import { sfxJump } from './sfx'
 
 extend({ Container, Graphics })
 
@@ -38,7 +39,7 @@ export default function WoollyPlayer({ woollyBox, obstaclesRef, onSpeedChange, d
           if (!KEYS.jump) {
             KEYS.jump = true
             autoEnabled.current = false
-            if (!jumping.current) { vy.current = -7; jumping.current = true }
+            if (!jumping.current) { vy.current = -8.5; sfxJump(); jumping.current = true }
           }
           break
       }
@@ -54,7 +55,7 @@ export default function WoollyPlayer({ woollyBox, obstaclesRef, onSpeedChange, d
     }
     const onTap = () => {
       autoEnabled.current = false
-      if (!jumping.current) { vy.current = -7; jumping.current = true }
+      if (!jumping.current) { vy.current = -8.5; sfxJump(); jumping.current = true }
     }
     window.addEventListener('keydown', onDown)
     window.addEventListener('keyup', onUp)
@@ -86,7 +87,8 @@ export default function WoollyPlayer({ woollyBox, obstaclesRef, onSpeedChange, d
 
     if (KEYS.up && !jumping.current) {
       autoEnabled.current = false
-      vy.current = -7
+      vy.current = -8.5
+      sfxJump()
       jumping.current = true
     }
 
@@ -115,10 +117,11 @@ export default function WoollyPlayer({ woollyBox, obstaclesRef, onSpeedChange, d
           // LOW obstacles (spike/log/gap on ground) need jump
           // HIGH items (book/star floating above) do NOT need jump
           if (isObstacle) {
-            if (nearestDist > 25 && nearestDist < 80) {
-              vy.current = -7.5
+            if (nearestDist > 20 && nearestDist < 90) {
+              vy.current = -8.5
+              sfxJump()
               jumping.current = true
-              jumpBuffer.current = 5
+              jumpBuffer.current = 8
             }
           }
         }
@@ -130,7 +133,7 @@ export default function WoollyPlayer({ woollyBox, obstaclesRef, onSpeedChange, d
     // Decrement jump buffer
     if (jumpBuffer.current > 0) jumpBuffer.current -= dt
 
-    vy.current += 0.35 * dt
+    vy.current += 0.3 * dt
     const nextY = woollyY + vy.current * dt
     if (nextY >= groundY.current) {
       setWoollyY(groundY.current)
@@ -159,3 +162,4 @@ export default function WoollyPlayer({ woollyBox, obstaclesRef, onSpeedChange, d
 
   return <pixiGraphics draw={draw} />
 }
+

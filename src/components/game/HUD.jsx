@@ -11,21 +11,43 @@ extend({ Graphics })
 export default function HUD({ xp, level, width, height }) {
   const displayXp = useRef(0)
   const prevXp = useRef(xp)
+  const prevLevel = useRef(level)
   const showLevelUp = useRef(0)
+  const burst = useRef([])
+  const [soundOn, setSoundOn] = useState(false)
   const [tick, setTick] = useState(0)
 
+  if (level > prevLevel.current) {
+    showLevelUp.current = 90
+    const cx = width / 2
+    const cy = height * 0.4
+    burst.current = Array.from({ length: 14 }, () => {
+      const angle = Math.random() * Math.PI * 2
+      const speed = 2 + Math.random() * 3
+      return { x: cx, y: cy, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed - 1, life: 50, maxLife: 50, size: 1.5 + Math.random() * 3 }
+    })
+  }
+  prevLevel.current = level
   if (xp < prevXp.current) {
     showLevelUp.current = 90
   }
   prevXp.current = xp
 
-  useTick((ticker) => {
+    useTick((ticker) => {
     const dt = ticker.deltaTime
     displayXp.current += ((xp / MAX_XP) * XP_BAR_WIDTH - displayXp.current) * 0.1 * dt
 
     if (showLevelUp.current > 0) {
       showLevelUp.current -= dt
     }
+
+    burst.current.forEach((p) => {
+      p.x += p.vx * dt
+      p.y += p.vy * dt
+      p.vy += 0.08 * dt
+      p.life -= 1 * dt
+    })
+    burst.current = burst.current.filter((p) => p.life > 0)
 
     setTick((t) => t + 1)
   })
@@ -214,7 +236,21 @@ export default function HUD({ xp, level, width, height }) {
         g.stroke()
       }
     }
+
+    // Level up burst particles
+    burst.current.forEach((p) => {
+      const alpha = p.life / p.maxLife
+      g.setFillStyle({ color: `rgba(253, 198, 49, ${alpha})` })
+      g.beginPath()
+      g.circle(p.x, p.y, p.size * (0.3 + alpha * 0.7))
+      g.fill()
+    })
   }, [tick])
 
   return <pixiGraphics draw={draw} />
 }
+
+
+
+
+

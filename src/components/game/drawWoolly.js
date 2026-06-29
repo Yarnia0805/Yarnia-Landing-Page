@@ -127,3 +127,29 @@ export function drawWoolly(g, x, y, legSin) {
   g.closePath()
   g.fill()
 }
+
+export function drawDeadWoolly(g, x, y, alpha) {
+  if (!alpha || alpha <= 0) return
+  g.setFillStyle({ color: gba(237, 233, 220, ) })
+  g.setStrokeStyle({ color: gba(26, 26, 46, ), width: 2 })
+  g.moveTo(x + 8, y + 20)
+  g.bezierCurveTo(x + 4, y + 30, x + 8, y + 42, x + 18, y + 43)
+  g.bezierCurveTo(x + 22, y + 43, x + 35, y + 40, x + 32, y + 18)
+  g.fill(); g.stroke()
+  g.ellipse(x + 20, y + 22, 10, 9)
+  g.fill(); g.stroke()
+  g.setStrokeStyle({ color: gba(26, 26, 46, ), width: 1.5 })
+  g.beginPath(); g.moveTo(x + 14, y + 20); g.lineTo(x + 18, y + 24); g.stroke()
+  g.beginPath(); g.moveTo(x + 18, y + 20); g.lineTo(x + 14, y + 24); g.stroke()
+  g.beginPath(); g.moveTo(x + 22, y + 20); g.lineTo(x + 26, y + 24); g.stroke()
+  g.beginPath(); g.moveTo(x + 26, y + 20); g.lineTo(x + 22, y + 24); g.stroke()
+  g.setFillStyle({ color: gba(253, 198, 49, ) })
+  g.setStrokeStyle({ color: gba(26, 26, 46, ), width: 1.5 })
+  g.roundRect(x + 9, y + 30, 22, 4, 2)
+  g.fill(); g.stroke()
+  g.setFillStyle({ color: gba(26, 26, 46, ) })
+  g.roundRect(x + 8, y + 38, 6, 8, 2)
+  g.fill()
+  g.roundRect(x + 24, y + 36, 6, 8, 2)
+  g.fill()
+}

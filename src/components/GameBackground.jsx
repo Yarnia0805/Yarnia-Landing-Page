@@ -1,10 +1,12 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { Application } from '@pixi/react'
 import WorldLayer from './game/WorldLayer'
+import ForestCreatures from './game/ForestCreatures'
 import WoollyPlayer from './game/WoollyPlayer'
 import PropsManager from './game/PropsManager'
 import HUD from './game/HUD'
 import Particles from './game/Particles'
+import { sfxLevelUp, sfxGameOver, startForestAmbient, stopForestAmbient } from './game/sfx'
 
 export default function GameBackground() {
   const wrapperRef = useRef(null)
@@ -53,10 +55,12 @@ export default function GameBackground() {
         deadRef.current = true
         speedRef.current = 0
         setGameOver(true)
+        sfxGameOver()
         return 0
       }
       const next = Math.max(0, prev + value)
       if (next >= 100) {
+        sfxLevelUp()
         setLevel((l) => l + 1)
         return next - 100
       }
@@ -82,6 +86,12 @@ export default function GameBackground() {
     return () => clearTimeout(t)
   }, [gameOver])
 
+  // Start forest ambient on mount
+  useEffect(() => {
+    startForestAmbient()
+    return () => stopForestAmbient()
+  }, [])
+
   return (
     <div
       ref={wrapperRef}
@@ -101,6 +111,7 @@ export default function GameBackground() {
           resolution={1}
         >
           <WorldLayer width={size.width} height={size.height} speedRef={speedRef} />
+          <ForestCreatures width={size.width} height={size.height} speedRef={speedRef} woollyBox={woollyBox} />
           <PropsManager onCollect={handleCollect} woollyBox={woollyBox} width={size.width} height={size.height} obstaclesRef={obstaclesRef} speedRef={speedRef} />
           <WoollyPlayer woollyBox={woollyBox} obstaclesRef={obstaclesRef} onSpeedChange={(v) => { speedRef.current = v }} dead={gameOver} />
           <Particles collectEvents={collectEvents} width={size.width} height={size.height} />
@@ -138,3 +149,9 @@ export default function GameBackground() {
     </div>
   )
 }
+
+
+
+
+
+

@@ -1145,3 +1145,100 @@ GameBackground (state: xp, level, size)
 ```
 
 Components giao tiếp qua props (xuôi) và callbacks (ngược). Không dùng context/store cho game state — giữ local trong GameBackground.
+
+---
+
+## 16. Phase R — Forest Depth Expansion
+
+Mục tiêu: Biến game background thành khu rừng sâu nhiều tầng với hệ sinh thái sinh vật đa dạng.
+
+### Phase R1 — Rừng sâu (depth + environment)
+
+Mở rộng WorldLayer với nhiều chiều sâu thị giác và địa hình sinh động.
+
+| Task | File | Mô tả |
+|------|------|-------|
+| Background mountain layers | drawWorld.js | 2-3 dãy núi xa với parallax chậm (0.05–0.15), màu pastel tím/xanh |
+| Mid-ground tree variety | drawWorld.js | Thêm pine (tam giác), oak (tròn), bamboo (thẳng) — mỗi loại hàm draw riêng |
+| Foreground bushes/ferns | drawWorld.js | Bụi dương xỉ gần camera, parallax nhanh (0.6), stroke mảnh |
+| Undulating ground | drawWorld.js | Ground line không phẳng — sin wave nhẹ, đồi lượn sóng |
+| Mist/fog layer | WorldLayer.jsx | Lớp sương mờ ở depth mid, alpha 0.1–0.3, cuộn chậm |
+| Light rays (sun shafts) | drawWorld.js | Tia nắng xuyên tán lá, gradient vàng nhạt alpha thấp |
+| Depth-sorted rendering | WorldLayer.jsx | Đảm bảo thứ tự vẽ: núi xa → cây mid → sương → ground → foreground → grass |
+
+### Phase R2 — Sinh vật đa dạng
+
+Thêm các sinh vật rừng hoạt động độc lập, mỗi loài có AI đơn giản.
+
+#### R2.1 — Rabbit (thỏ)
+
+File: `drawRabbit.js` (mới) + WorldLayer.jsx
+
+```
+- Body: ellipse trắng/xám, tai dài, mắt tròn
+- Hoạt động: ngồi → nhảy 2-3 bước → dừng → lặp lại
+- Phản ứng: bỏ chạy khi Woolly đến gần (< 150px)
+- Parallax: mid-ground, tốc độ 0.3
+```
+
+#### R2.2 — Squirrel (sóc)
+
+File: `drawSquirrel.js` (mới) + WorldLayer.jsx
+
+```
+- Body: ellipse nâu cam, đuôi lớn cong, tay nhỏ
+- Hoạt động: leo cây → dừng → ném quả (acorn) xuống → chạy tiếp
+- Acorn: vật nhỏ rơi từ cây, không gây damage, chỉ ambient
+- Parallax: mid-ground, gắn với cây
+```
+
+#### R2.3 — Birds (chim)
+
+File: `drawBird.js` (mới) + WorldLayer.jsx
+
+```
+- Body: ellipse nhỏ, cánh vỗ (wingPhase), đuôi
+- Hoạt động: bay ngang bầu trời (5-8 con), đàn V formation
+- Đậu cành: thỉnh thoảng đỗ trên cây, cất cánh khi Woolly gần
+- Parallax: sky layer, tốc độ 0.1–0.2
+```
+
+#### R2.4 — Fireflies (đom đóm)
+
+File: `drawFirefly.js` (mới) + WorldLayer.jsx hoặc Particles.jsx
+
+```
+- Body: chấm tròn nhỏ, phát sáng vàng/lục nhạt
+- Hoạt động: bay random, alpha nhấp nháy sin wave
+- Spawn: 8-12 con, xuất hiện ở tầng thấp (gần ground/bụi cây)
+- Parallax: foreground, tốc độ 0.5
+```
+
+#### R2.5 — Butterflies màu sắc (nâng cấp)
+
+Sửa `drawButterfly.js`:
+
+```
+- Nhiều màu: hồng, xanh, vàng, tím (random khi spawn)
+- Kích thước đa dạng: 0.6–1.4 scale
+- Số lượng: 3-5 con thay vì 1
+- Pattern bay: zigzag + vòng tròn, không trùng nhau
+```
+
+### Phase R3 — Hệ sinh thái + tương tác
+
+| Task | File | Mô tả |
+|------|------|-------|
+| Sinh vật phản ứng | WorldLayer.jsx | Khi Woolly đến gần (±200px), thỏ bỏ chạy, chim cất cánh, sóc leo cao hơn |
+| Collectible mới | PropsManager.jsx | Acorn, berry, feather — mỗi loại XP khác nhau, visual riêng |
+| Forest ambient SFX | sfx.js | Tiếng chim hót (oscillator frequency sweep), gió thổi (noise filter), dế kêu (square wave thấp) |
+| Day/night cycle | WorldLayer.jsx | Sky gradient chuyển màu chậm (5-7 phút/cycle), đom đóm chỉ xuất hiện khi tối |
+| Weather (mưa nhẹ) | WorldLayer.jsx | Hạt mưa thẳng đứng, alpha thấp, âm thanh mưa |
+
+### Tổng quan Phase R
+
+| Phase | Files mới | Files sửa | Task count |
+|-------|-----------|-----------|------------|
+| R1 | 0 | 2 | 7 (drawWorld.js + WorldLayer.jsx) |
+| R2 | 5 | 2 | 5 loài sinh vật |
+| R3 | 0 | 4 | 5 tính năng |

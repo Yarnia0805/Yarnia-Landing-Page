@@ -1,7 +1,9 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useState } from "react";
 import "./index.css";
 import Navbar from "./components/Navbar";
 import GameBackground from "./components/GameBackground";
+import PageDecorations from "./components/backgrounds/PageDecorations";
+import SoundToggle from "./components/SoundToggle";
 import DemoBg from "./components/DemoBg";
 import Hero from "./components/Hero";
 import Stats from "./components/Stats";
@@ -23,37 +25,39 @@ const CTA = lazy(() => import("./components/CTA"));
 const Footer = lazy(() => import("./components/Footer"));
 
 export default function App() {
+  const [soundOn, setSoundOn] = useState(false)
+
   return (
     <div className="min-h-screen">
       <GameBackground />
+      <PageDecorations />
       <div style={{ position: 'relative', zIndex: 1 }}>
         <Navbar />
-        <DemoBg />
         <Hero />
         <Stats />
         <Suspense fallback={<SectionSkeleton height="640px" />}>
           <StoryReaderDemo />
         </Suspense>
-        <Suspense fallback={<SectionSkeleton height="560px" />}>
-          <Features />
-        </Suspense>
         <Suspense fallback={<SectionSkeleton height="520px" />}>
           <StoryCategories />
         </Suspense>
         <Suspense fallback={<SectionSkeleton height="480px" />}>
-          <KidModeDemo />
-        </Suspense>
-        <Suspense fallback={<SectionSkeleton height="480px" />}>
           <HowItWorks />
-        </Suspense>
-        <Suspense fallback={<SectionSkeleton height="600px" />}>
-          <ParentDashboardDemo />
         </Suspense>
         <Suspense fallback={<SectionSkeleton height="480px" />}>
           <Testimonials />
         </Suspense>
         <Suspense fallback={<SectionSkeleton height="560px" />}>
+          <Features />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton height="480px" />}>
+          <KidModeDemo />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton height="560px" />}>
           <Pricing />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton height="600px" />}>
+          <ParentDashboardDemo />
         </Suspense>
         <Suspense fallback={<SectionSkeleton height="480px" />}>
           <Contact />
@@ -65,6 +69,7 @@ export default function App() {
           <Footer />
         </Suspense>
       </div>
+      <SoundToggle soundOn={soundOn} setSoundOn={setSoundOn} />
     </div>
   );
 }

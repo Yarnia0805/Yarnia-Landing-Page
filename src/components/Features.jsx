@@ -4,7 +4,7 @@ import { useInView } from 'react-intersection-observer'
 import {
   Headphones, Lightning, ShieldCheck, Trophy, BookBookmark, Users, Sparkle, Heart,
 } from '@phosphor-icons/react'
-import CardSwap, { Card } from './CardSwap'
+import CardSwap, { Card } from './effects/CardSwap'
 
 const REACTIONS_URL = import.meta.env.VITE_SHEETDB_URL ?? ''
 
@@ -36,8 +36,8 @@ const features = [
   {
     id: 'gamification',
     icon: Trophy,
-    color: '#B8860B',
-    bg: 'linear-gradient(135deg, #E8A020 0%, #FDC631 100%)',
+    color: '#F2763A',
+    bg: 'linear-gradient(135deg, #F2763A 0%, #FDC631 100%)',
     label: 'XP & Huy hiệu',
     title: 'Gamification XP & Huy hiệu',
     desc: 'Bé kiếm điểm kinh nghiệm, mở khóa huy hiệu và leo bảng xếp hạng khi đọc — vừa học vừa chơi.',
@@ -60,8 +60,8 @@ const features = [
   {
     id: 'quiz',
     icon: BookBookmark,
-    color: '#7C3AED',
-    bg: 'linear-gradient(135deg, #7C3AED 0%, #A855F7 100%)',
+    color: '#9273E4',
+    bg: 'linear-gradient(135deg, #9273E4 0%, #B088FF 100%)',
     label: 'Tương tác',
     title: 'Câu hỏi tương tác',
     desc: 'Sau mỗi truyện có câu hỏi hiểu bài thú vị, kích thích tư duy phản biện và sáng tạo cho trẻ.',
@@ -72,8 +72,8 @@ const features = [
   {
     id: 'family',
     icon: Users,
-    color: '#C2520A',
-    bg: 'linear-gradient(135deg, #C2520A 0%, #F2763A 100%)',
+    color: '#0648D7',
+    bg: 'linear-gradient(135deg, #0648D7 0%, #4F7FFF 100%)',
     label: 'Gia đình',
     title: 'Đọc cùng gia đình',
     desc: 'Chế độ đọc chung — bố mẹ và con cùng nghe, cùng thảo luận, gắn kết tình cảm qua câu chuyện.',
@@ -128,7 +128,7 @@ function HeartButton({ feat, reactions, onReact }) {
       whileTap={reacted ? {} : { scale: 0.85 }}
       className="relative flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold transition-all"
       style={{
-        background: reacted ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.12)',
+        background: reacted ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.06)',
         color: '#fff',
         border: `1px solid ${reacted ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.15)'}`,
         cursor: reacted ? 'default' : 'pointer',
@@ -272,11 +272,11 @@ export default function Features() {
   }
 
   return (
-    <section id="features" className="py-32 relative" style={{ background: 'rgba(255,255,255,0.35)', backdropFilter: 'blur(4px)', overflow: 'clip' }} ref={ref}>
+    <section id="features" className="py-32 relative" style={{ background: '#1A1A2E', backdropFilter: 'none', overflow: 'clip' }} ref={ref}>
       {/* blobs */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden>
-        <div style={{ position: 'absolute', top: '-8%', left: '-4%', width: 560, height: 560, borderRadius: '50%', background: 'radial-gradient(circle, #EEF2FF 0%, transparent 70%)', opacity: 0.9 }}/>
-        <div style={{ position: 'absolute', bottom: 0, right: '-4%', width: 480, height: 480, borderRadius: '50%', background: 'radial-gradient(circle, #FFF7ED 0%, transparent 70%)', opacity: 0.9 }}/>
+        <div style={{ position: 'absolute', top: '-8%', left: '-4%', width: 560, height: 560, borderRadius: '50%', background: 'radial-gradient(circle, #9273E4 0%, transparent 70%)', opacity: 0.25 }}/>
+        <div style={{ position: 'absolute', bottom: 0, right: '-4%', width: 480, height: 480, borderRadius: '50%', background: 'radial-gradient(circle, #0648D7 0%, transparent 70%)', opacity: 0.25 }}/>
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto px-6">
@@ -288,17 +288,17 @@ export default function Features() {
           className="text-center mb-16"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-[0.18em] mb-6"
-               style={{ background: 'rgba(6,72,215,0.08)', color: '#0648D7', border: '1px solid rgba(6,72,215,0.15)' }}>
+               style={{ background: 'rgba(6,72,215,0.15)', color: '#4F7FFF', border: '1px solid rgba(6,72,215,0.3)' }}>
             <Sparkle size={13} weight="duotone"/> Tính năng nổi bật
           </div>
-          <h2 className="font-display font-black text-[#1A1A2E] mb-4" style={{ fontSize: 'clamp(28px, 4vw, 48px)' }}>
+          <h2 className="font-display font-black text-[#FFFFFF] mb-4" style={{ fontSize: 'clamp(28px, 4vw, 48px)' }}>
             Được xây dựng cho{' '}
             <span style={{ color: '#0648D7' }}>sự phát triển</span> của bé
           </h2>
-          <p className="text-lg max-w-xl mx-auto leading-relaxed" style={{ color: '#6B6B8A' }}>
+          <p className="text-lg max-w-xl mx-auto leading-relaxed" style={{ color: 'rgba(255,255,255,0.6)' }}>
             Mỗi tính năng được thiết kế dựa trên nghiên cứu giáo dục và phản hồi từ hàng nghìn gia đình Việt Nam.
           </p>
-          <p className="text-sm mt-3 font-medium" style={{ color: '#9090B0' }}>
+          <p className="text-sm mt-3 font-medium" style={{ color: 'rgba(255,255,255,0.45)' }}>
             <Heart size={13} weight="duotone" style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4, color: '#DD3A34' }}/>
             Nhấn vào tính năng để xem chi tiết · Thả tim để bày tỏ cảm xúc
           </p>
@@ -327,9 +327,9 @@ export default function Features() {
                     transition={{ type: 'spring', stiffness: 320, damping: 26 }}
                     className="rounded-2xl p-4 flex gap-4 items-center cursor-pointer select-none"
                     style={{
-                      background: isActive ? `${feat.color}08` : '#FAFAFA',
-                      border: `1.5px solid ${isActive ? feat.color + '40' : 'rgba(0,0,0,0.06)'}`,
-                      boxShadow: isActive ? `0 4px 20px ${feat.color}18` : '0 2px 6px rgba(0,0,0,0.03)',
+                      background: isActive ? `${feat.color}15` : 'rgba(255,255,255,0.06)',
+                      border: `1.5px solid ${isActive ? feat.color + '60' : 'rgba(255,255,255,0.08)'}`,
+                      boxShadow: isActive ? `0 4px 20px ${feat.color}30` : '0 2px 6px rgba(0,0,0,0.2)',
                       transition: 'all 0.25s cubic-bezier(0.22,1,0.36,1)',
                     }}
                   >
@@ -345,23 +345,23 @@ export default function Features() {
 
                     {/* text */}
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-bold text-[15px]" style={{ color: isActive ? feat.color : '#1A1A2E' }}>{feat.title}</h3>
-                      <p className="text-[12px] leading-relaxed mt-0.5" style={{ color: '#6B6B8A' }}>{feat.desc}</p>
+                      <h3 className="font-bold text-[15px]" style={{ color: isActive ? feat.color : 'rgba(255,255,255,0.7)' }}>{feat.title}</h3>
+                      <p className="text-[12px] leading-relaxed mt-0.5" style={{ color: 'rgba(255,255,255,0.6)' }}>{feat.desc}</p>
                     </div>
 
                     {/* stat + heart */}
                     <div className="shrink-0 text-right flex flex-col items-end gap-1.5" style={{ minWidth: 72 }}>
                       <div className="font-black text-[15px]" style={{ color: feat.color }}>{feat.stats}</div>
-                      <div className="text-[10px]" style={{ color: '#9090B0' }}>{feat.statsLabel}</div>
+                      <div className="text-[10px]" style={{ color: 'rgba(255,255,255,0.4)' }}>{feat.statsLabel}</div>
 
                       {/* inline heart for list */}
                       <button
                         onClick={(e) => { e.stopPropagation(); if (!reacted) handleReact(feat.id, feat.title) }}
                         className="flex items-center gap-1 text-[11px] font-bold rounded-full px-2 py-0.5 transition-all"
                         style={{
-                          background: reacted ? '#FFF0F0' : 'transparent',
-                          color: reacted ? '#DD3A34' : '#C0C0D0',
-                          border: `1px solid ${reacted ? '#FFCDD2' : '#E8E8F0'}`,
+                          background: reacted ? 'rgba(221,58,52,0.15)' : 'transparent',
+                          color: reacted ? '#DD3A34' : 'rgba(255,255,255,0.35)',
+                          border: `1px solid ${reacted ? 'rgba(221,58,52,0.3)' : 'rgba(255,255,255,0.1)'}`,
                           cursor: reacted ? 'default' : 'pointer',
                         }}
                         title={reacted ? 'Đã thả tim' : 'Thả tim'}
@@ -374,7 +374,7 @@ export default function Features() {
                           <Heart
                             size={12}
                             weight={reacted ? 'fill' : 'regular'}
-                            color={reacted ? '#DD3A34' : '#C0C0D0'}
+                            color={reacted ? '#DD3A34' : 'rgba(255,255,255,0.35)'}
                           />
                         </motion.span>
                         {reactions[feat.id]?.count > 0 && (

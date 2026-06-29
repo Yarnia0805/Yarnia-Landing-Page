@@ -9,37 +9,59 @@ export const WOLLY_YARN = '#FDC631' // accent yellow
 export const TEXT_DARK = '#1A1A2E'
 export const TEXT_MUTED = '#4A4A6A'
 
-// ── Terrain (brand-aligned) ──
-export const SKY_TOP = 'rgba(253,198,49,0.06)'
+// ── Sky ──
+export const SKY_TOP = 'rgba(253,198,49,0.10)'
 export const SKY_BOTTOM = '#F4F3ED'
 
-// Depth layers — each layer has its own scroll speed and color
-// Each layer rendered front-to-back (index 0 = farthest)
+// ── Forest depth layers — mountain silhouettes far-to-near ──
 export const DEPTH_LAYERS = [
-  // Far mountains — silhouette style, parallax 0.03
-  { color: 'rgba(6,72,215,0.12)', speed: 0.012, peak: 55, spread: 0.45 },
-  // Mid mountains — parallax 0.06
-  { color: 'rgba(146,115,228,0.20)', speed: 0.025, peak: 45, spread: 0.35 },
-  // Back hills — parallax 0.10
-  { color: 'rgba(50,128,69,0.25)', speed: 0.05, peak: 35, spread: 0.30 },
-  // Mid hills — parallax 0.18
-  { color: 'rgba(242,121,166,0.28)', speed: 0.10, peak: 28, spread: 0.25 },
-  // Near hills — parallax 0.28
-  { color: 'rgba(146,115,228,0.35)', speed: 0.18, peak: 20, spread: 0.20 },
-  // Front hill — parallax 0.40
-  { color: 'rgba(253,198,49,0.20)', speed: 0.28, peak: 14, spread: 0.15 },
+  // Farthest — ice peaks
+  { color: 'rgba(180,200,240,0.10)', speed: 0.003, peak: 260, spread: 0.48 },
+  // Far blue mountains
+  { color: 'rgba(6,72,215,0.14)', speed: 0.008, peak: 200, spread: 0.45 },
+  // Mid purple ridge
+  { color: 'rgba(146,115,228,0.22)', speed: 0.018, peak: 160, spread: 0.42 },
+  // Back green hills
+  { color: 'rgba(50,128,69,0.30)', speed: 0.04, peak: 120, spread: 0.38 },
+  // Mid teal forest
+  { color: 'rgba(59,196,160,0.30)', speed: 0.08, peak: 90, spread: 0.33 },
+  // Near pink hills
+  { color: 'rgba(242,121,166,0.32)', speed: 0.14, peak: 60, spread: 0.28 },
+  // Front gold hill
+  { color: 'rgba(253,198,49,0.22)', speed: 0.24, peak: 36, spread: 0.22 },
 ]
 
-// Object depths — separate parallax for trees/details
+// ── Tree types for each depth ──
 export const TREE_DEPTHS = [
-  { speed: 0.04, scale: [0.4, 0.6], count: 6, opacity: 0.12 },  // far trees
-  { speed: 0.12, scale: [0.6, 0.9], count: 5, opacity: 0.20 },  // mid trees
-  { speed: 0.30, scale: [0.9, 1.3], count: 4, opacity: 0.30 },  // near trees
+  // Far — tiny pine silhouettes
+  { speed: 0.01, type: 'pine', scale: [1.0, 1.6], count: 16, opacity: 0.10 },
+  // Mid-far — mixed
+  { speed: 0.03, type: 'mixed', scale: [1.5, 2.2], count: 10, opacity: 0.16 },
+  // Mid — oak trees (tall canopy)
+  { speed: 0.07, type: 'oak', scale: [2.0, 2.8], count: 7, opacity: 0.24 },
+  // Mid-near — bamboo
+  { speed: 0.14, type: 'bamboo', scale: [2.5, 3.5], count: 8, opacity: 0.34 },
+  // Near — giant oak, foreground
+  { speed: 0.28, type: 'oak', scale: [3.2, 4.0], count: 4, opacity: 0.46 },
+  // Closest — large pine silhouettes
+  { speed: 0.40, type: 'pine', scale: [3.5, 4.5], count: 3, opacity: 0.50 },
 ]
 
+// ── Ground ──
 export const GROUND_COLOR = 'rgba(26,26,46,0.10)'
-export const GROUND_LINE = '#1A1A2E'
+export const GROUND_LINE_COLOR = '#1A1A2E'
 export const GROUND_LINE_Y = 3
+
+// ── Mist ──
+export const MIST_LAYERS = [
+  { y: 0.20, h: 0.08, alpha: 0.08, speed: 0.008 },
+  { y: 0.35, h: 0.06, alpha: 0.12, speed: 0.015 },
+  { y: 0.50, h: 0.10, alpha: 0.06, speed: 0.025 },
+]
+
+// ── Light rays ──
+export const RAY_COUNT = 3
+export const RAY_ALPHA = 0.04
 
 // ── Sizing ──
 export const WOLLY_WIDTH = 48

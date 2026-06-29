@@ -4,11 +4,11 @@ import { useCallback, useRef, useState } from 'react'
 import { drawWorld } from './drawWorld'
 import { drawCloud } from './drawCloud'
 import { drawSparkle } from './drawSparkle'
-import { CLOUD_COUNT } from './constants'
+import { CLOUD_COUNT, MIST_LAYERS } from './constants'
 
 extend({ Graphics })
 
-const SPARKLE_COUNT = 10
+const SPARKLE_COUNT = 12
 
 export default function WorldLayer({ width, height, speedRef }) {
   const cameraX = useRef(0)
@@ -21,6 +21,7 @@ export default function WorldLayer({ width, height, speedRef }) {
     const mult = speedRef?.current ?? 1
     cameraX.current += 0.8 * mult * dt
 
+    // Clouds drift
     clouds.current.forEach((c) => {
       c.x -= 0.3 * dt
       if (c.x < -80) {
@@ -29,6 +30,7 @@ export default function WorldLayer({ width, height, speedRef }) {
       }
     })
 
+    // Sparkles float
     sparkles.current.forEach((s) => {
       s.x += s.vx * dt
       s.y += s.vy * dt
@@ -44,14 +46,17 @@ export default function WorldLayer({ width, height, speedRef }) {
 
   const draw = useCallback((g) => {
     g.clear()
+
+    // 1. World terrain (mountains → trees → ground → grass → flowers)
     drawWorld(g, width, height, cameraX.current)
 
-    // sparkles
+    // 2. Sparkles (foreground air particles)
     sparkles.current.forEach((s) => {
       const alpha = (Math.sin(s.phase) * 0.5 + 0.5) * 0.35
       drawSparkle(g, s.x, s.y, s.size, alpha)
     })
 
+    // 3. Clouds (sky layer)
     clouds.current.forEach((c) => drawCloud(g, c.x, c.y, c.scale))
   }, [width, height, tick])
 

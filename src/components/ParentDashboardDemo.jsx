@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { ShieldCheck, ChartLine, Clock, Books, Sparkle } from '@phosphor-icons/react'
 import { MacBrowserFrame } from './DeviceFrames'
-import SpotlightCard from './SpotlightCard'
+import SpotlightCard from './effects/SpotlightCard'
 
 const DAYS = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN']
 const READING_MINS = [12, 20, 8, 25, 18, 35, 28]
@@ -200,7 +200,7 @@ export default function ParentDashboardDemo() {
   ]
 
   return (
-    <section ref={ref} className="py-32 overflow-hidden" style={{ background: 'rgba(255,255,237,0.35)', backdropFilter: 'blur(4px)' }}>
+    <section ref={ref} className="py-32 overflow-hidden" style={{ background: 'transparent', backdropFilter: 'none' }}>
       <div className="max-w-6xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 28, filter: 'blur(6px)' }}

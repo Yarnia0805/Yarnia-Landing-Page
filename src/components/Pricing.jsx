@@ -1,16 +1,15 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Check, Diamond, Lock } from '@phosphor-icons/react'
-import SpotlightCard from './SpotlightCard'
-import BorderGlow from './BorderGlow'
+import SpotlightCard from './effects/SpotlightCard'
 
 const plans = [
   {
     name: 'Miễn phí',
     price: '0',
     period: '/tháng',
-    color: '#1A1A2E',
-    bg: 'white',
+    color: 'rgba(255,255,255,0.8)',
+    bg: 'rgba(255,255,255,0.06)',
     border: 'rgba(26,26,46,0.12)',
     glow: '222 82 56', gc: ['#0648D7','#9273E4','#FDC631'],
     features: [
@@ -50,8 +49,8 @@ const plans = [
     name: 'Hàng năm',
     price: '69.000',
     period: 'đ/tháng',
-    color: '#1A1A2E',
-    bg: 'white',
+    color: 'rgba(255,255,255,0.8)',
+    bg: 'rgba(255,255,255,0.06)',
     border: 'rgba(26,26,46,0.12)',
     glow: '138 44 35', gc: ['#328045','#FDC631','#0648D7'],
     badge: '💰 Tiết kiệm 23%',
@@ -72,7 +71,7 @@ export default function Pricing() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 })
 
   return (
-    <section id="pricing" className="py-32" style={{ background: 'rgba(255,255,255,0.35)', backdropFilter: 'blur(4px)' }} ref={ref}>
+    <section id="pricing" className="py-32" style={{ background: '#1A1A2E', backdropFilter: 'none' }} ref={ref}>
       <div className="max-w-5xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -84,11 +83,11 @@ export default function Pricing() {
                style={{ background: '#9273E415', color: '#9273E4' }}>
             <Diamond size={13} weight="duotone"/> Bảng giá
           </div>
-          <h2 className="font-display font-black text-[#1A1A2E] mb-4"
+          <h2 className="font-display font-black text-white mb-4"
               style={{ fontSize: 'clamp(28px, 4vw, 44px)' }}>
             Giá cả <span style={{ color: '#328045' }}>minh bạch</span>, không phí ẩn
           </h2>
-          <p className="text-lg max-w-xl mx-auto" style={{ color: '#6B6B8A' }}>
+          <p className="text-lg max-w-xl mx-auto" style={{ color: 'rgba(255,255,255,0.6)' }}>
             Bắt đầu miễn phí. Nâng cấp khi bé cần thêm câu chuyện.
           </p>
         </motion.div>
@@ -102,16 +101,13 @@ export default function Pricing() {
               transition={{ duration: 0.5, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
               style={{ transform: plan.bg === '#DD3A34' ? 'scale(1.04)' : 'scale(1)' }}
             >
-            <BorderGlow
-              backgroundColor={plan.bg}
-              borderRadius={24}
-              glowColor={plan.glow}
-              colors={plan.gc}
-              glowIntensity={plan.bg === '#DD3A34' ? 1.1 : 0.85}
-              glowRadius={36}
-              edgeSensitivity={20}
+            <div
               className="h-full"
-              style={{ boxShadow: plan.bg === '#DD3A34' ? '0 24px 64px rgba(221,58,52,0.25)' : '0 4px 24px rgba(0,0,0,0.06)' }}
+              style={{
+                background: plan.bg,
+                borderRadius: 24,
+                boxShadow: plan.bg === '#DD3A34' ? '0 24px 64px rgba(221,58,52,0.25)' : '0 4px 24px rgba(0,0,0,0.06)',
+              }}
             >
             <SpotlightCard
               spotlightColor={plan.bg === '#DD3A34' ? 'rgba(255,255,255,0.12)' : 'rgba(253,198,49,0.12)'}
@@ -125,7 +121,7 @@ export default function Pricing() {
                   className="absolute top-5 right-5 text-xs font-bold px-3 py-1 rounded-full"
                   style={{
                     background: plan.bg === '#DD3A34' ? '#FDC631' : '#DD3A3415',
-                    color: plan.bg === '#DD3A34' ? '#1A1A2E' : '#DD3A34',
+                    color: plan.bg === '#DD3A34' ? 'white' : '#DD3A34',
                   }}
                 >
                   {plan.badge}
@@ -183,7 +179,7 @@ export default function Pricing() {
               </a>
             </div>
             </SpotlightCard>
-            </BorderGlow>
+            </div>
             </motion.div>
           ))}
         </div>

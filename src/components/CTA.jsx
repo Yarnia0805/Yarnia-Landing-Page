@@ -23,7 +23,7 @@ function MagBtn({ href, children, dark = false }) {
       className={`inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-bold text-base cursor-pointer`}
       style={dark
         ? { background: '#DD3A34', color: 'white', boxShadow: '0 8px 28px rgba(221,58,52,0.4)' }
-        : { background: 'rgba(26,26,46,0.12)', color: '#1A1A2E' }
+        : { background: 'rgba(26,26,46,0.12)', color: 'white' }
       }
     >
       {children}
@@ -35,7 +35,7 @@ export default function CTA() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.2 })
 
   return (
-    <section ref={ref} className="py-32" style={{ background: 'rgba(244,243,237,0.35)', backdropFilter: 'blur(4px)' }}>
+    <section ref={ref} className="py-32" style={{ background: 'transparent', backdropFilter: 'none' }}>
       <div className="max-w-4xl mx-auto px-6">
         {/* outer shell */}
         <motion.div

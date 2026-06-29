@@ -84,7 +84,7 @@ export default function Testimonials() {
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi])
 
   return (
-    <section className="py-32 overflow-hidden" style={{ background: 'rgba(244,243,237,0.35)', backdropFilter: 'blur(4px)' }} ref={ref}>
+    <section className="py-32 overflow-hidden" style={{ background: 'transparent', backdropFilter: 'none' }} ref={ref}>
       <div className="max-w-6xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 28 }}
@@ -95,7 +95,7 @@ export default function Testimonials() {
           <div>
             <div
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-[0.18em] mb-5"
-              style={{ background: 'rgba(253,198,49,0.18)', color: '#B8860B', border: '1px solid rgba(253,198,49,0.3)' }}
+              style={{ background: 'rgba(253,198,49,0.15)', color: '#FDC631', border: '1px solid rgba(253,198,49,0.3)' }}
             >
               <ChatCircle size={13} weight="duotone"/> Phụ huynh nói gì
             </div>

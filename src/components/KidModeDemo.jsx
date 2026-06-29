@@ -528,7 +528,7 @@ export default function KidModeDemo() {
   }
 
   return (
-    <section ref={ref} className="py-32 overflow-hidden" style={{ background: 'rgba(245,245,247,0.35)', backdropFilter: 'blur(4px)' }}>
+    <section ref={ref} className="py-32 overflow-hidden" style={{ background: 'transparent', backdropFilter: 'none' }}>
       <div className="max-w-7xl mx-auto px-6">
 
         {/* header */}

@@ -44,7 +44,7 @@ function CountUp({ value, suffix, decimal, color }) {
 export default function Stats() {
   const canvasOk = useCanvasSupport()
   return (
-    <section className="py-16 relative overflow-hidden" style={{ background: 'rgba(244,243,237,0.35)', backdropFilter: 'blur(8px)' }}>
+    <section className="py-32 relative overflow-hidden" style={{ background: 'transparent' }}>
       <div className="relative z-10 max-w-5xl mx-auto px-6">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
           {stats.map((s, i) => (
@@ -56,7 +56,7 @@ export default function Stats() {
               transition={{ delay: i * 0.1, duration: 0.5 }}
             >
               <CountUp {...s}/>
-              <div className="text-sm font-semibold mt-1" style={{ color: 'rgba(26,26,46,0.5)' }}>{s.label}</div>
+              <div className="text-sm font-semibold mt-1" style={{ color: 'rgba(255,255,255,0.9)' }}>{s.label}</div>
             </motion.div>
           ))}
         </div>

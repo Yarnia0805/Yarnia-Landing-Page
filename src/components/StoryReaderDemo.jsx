@@ -184,7 +184,7 @@ function UrlTypewriter({ active, onDone }) {
   }, [])
 
   return (
-    <span className="font-mono text-[10px]" style={{ color: '#444', letterSpacing: 0 }}>
+    <span className="font-mono text-[10px]" style={{ color: 'rgba(255,255,255,0.6)', letterSpacing: 0 }}>
       {typed}<span style={{ opacity: showCursor ? 1 : 0, color: '#0648D7' }}>|</span>
     </span>
   )
@@ -383,7 +383,7 @@ export default function StoryReaderDemo() {
 
   /* ── RENDER ── */
   return (
-    <section ref={ref} className="py-32 overflow-hidden" style={{ background: 'rgba(244,243,237,0.35)', backdropFilter: 'blur(4px)' }}>
+    <section ref={ref} className="py-32 overflow-hidden" style={{ background: '#1A1A2E', backdropFilter: 'none' }}>
       <div className="max-w-6xl mx-auto px-6">
         {/* header */}
         <motion.div
@@ -393,17 +393,17 @@ export default function StoryReaderDemo() {
           className="text-center mb-14"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-[0.18em] mb-6"
-            style={{ background: 'rgba(6,72,215,0.1)', color: '#0648D7', border: '1px solid rgba(6,72,215,0.2)' }}>
+            style={{ background: 'rgba(255,255,255,0.1)', color: '#80B0FF', border: '1px solid rgba(255,255,255,0.2)' }}>
             <Books size={12} weight="duotone"/> Trải nghiệm đọc truyện thực tế
           </div>
-          <h2 className="font-display font-black text-[#1A1A2E] mb-4" style={{ fontSize: 'clamp(28px,4vw,48px)' }}>
-            Nghe · đọc · <span style={{ color: '#0648D7' }}>hiểu</span> từng từ một
+          <h2 className="font-display font-black text-white mb-4" style={{ fontSize: 'clamp(28px,4vw,48px)' }}>
+            Nghe · đọc · <span style={{ color: '#80B0FF' }}>hiểu</span> từng từ một
           </h2>
-          <p className="text-lg max-w-xl mx-auto leading-relaxed" style={{ color: '#6B6B8A' }}>
+          <p className="text-lg max-w-xl mx-auto leading-relaxed" style={{ color: 'rgba(255,255,255,0.6)' }}>
             Chọn truyện, điều chỉnh cỡ chữ và tốc độ đọc — rồi trả lời câu hỏi để kiếm XP!
           </p>
           {ttsSupported && (
-            <p className="text-xs mt-2" style={{ color: '#9090B0' }}>
+            <p className="text-xs mt-2" style={{ color: 'rgba(255,255,255,0.45)' }}>
               🔊 Text-to-speech đang hoạt động — bật âm thanh để nghe!
             </p>
           )}
@@ -422,7 +422,7 @@ export default function StoryReaderDemo() {
             >
               <Suspense fallback={
                 <div style={{ height: 860, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <div style={{ width: 48, height: 48, border: '3px solid #0648D720', borderTopColor: '#0648D7', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }}/>
+                  <div style={{ width: 48, height: 48, border: '3px solid rgba(128,176,255,0.13)', borderTopColor: '#80B0FF', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }}/>
                 </div>
               }>
                 <MacBook3DScene
@@ -461,7 +461,7 @@ export default function StoryReaderDemo() {
               style={{
                 background: '#1d1d1f',
                 padding: '10px 10px 0 10px',
-                boxShadow: '0 0 0 1px rgba(0,0,0,0.5), 0 -4px 32px rgba(0,0,0,0.35)',
+                boxShadow: '0 0 0 1.5px rgba(255,255,255,0.12), 0 0 20px rgba(128,176,255,0.15), 0 -4px 32px rgba(0,0,0,0.35)',
               }}>
               {/* notch */}
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 rounded-b-xl z-10"
@@ -573,7 +573,7 @@ export default function StoryReaderDemo() {
                         <div className="text-[9px] font-bold uppercase tracking-wider mb-1" style={{ color: story.color }}>
                           💡 Từ mới
                         </div>
-                        <div className="font-bold text-[11px] text-[#1A1A2E]">{story.vocab[0].word}</div>
+                        <div className="font-bold text-[11px]" style={{ color: story.color }}>{story.vocab[0].word}</div>
                         <div className="text-[10px] leading-relaxed mt-0.5" style={{ color: '#6B6B8A' }}>{story.vocab[0].meaning}</div>
                       </motion.div>
                     </AnimatePresence>
@@ -610,7 +610,7 @@ export default function StoryReaderDemo() {
                         <motion.button whileTap={{ scale: 0.85 }} onClick={() => setBookmarked(b => !b)}
                           className="w-7 h-7 rounded-lg flex items-center justify-center"
                           style={{ background: bookmarked ? '#FDC631' : 'rgba(255,255,255,0.18)' }}>
-                          <BookmarkSimple size={12} color={bookmarked ? '#1A1A2E' : 'white'} weight={bookmarked ? 'fill' : 'regular'}/>
+                          <BookmarkSimple size={12} color={bookmarked ? '#FDC631' : 'white'} weight={bookmarked ? 'fill' : 'regular'}/>
                         </motion.button>
                         <div className="px-2 py-0.5 rounded-full text-[9px] font-bold" style={{ background: 'rgba(255,255,255,0.2)', color: 'white' }}>
                           {safePageIdx + 1}/{totalPages}
@@ -691,7 +691,7 @@ export default function StoryReaderDemo() {
                               ))}
                             </div>
 
-                            <p className="flex-1 leading-[1.9]" style={{ fontSize: FONT_SIZES[fontSize].size, color: '#1A1A2E', fontWeight: 500 }}>
+                            <p className="flex-1 leading-[1.9]" style={{ fontSize: FONT_SIZES[fontSize].size, color: '#2A2A4A', fontWeight: 500 }}>
                               {words.map((word, wi) => {
                                 const isActive = wordIdx === wi
                                 const isPast   = wordIdx > wi
@@ -700,7 +700,7 @@ export default function StoryReaderDemo() {
                                     key={`${safePageIdx}-${wi}`}
                                     animate={isActive
                                       ? { backgroundColor: story.color, color: 'white', scale: 1.05 }
-                                      : { backgroundColor: isPast ? `${story.color}16` : 'transparent', color: isPast ? story.color : '#1A1A2E', scale: 1 }
+                                      : { backgroundColor: isPast ? `${story.color}16` : 'transparent', color: isPast ? story.color : 'rgba(255,255,255,0.7)', scale: 1 }
                                     }
                                     transition={{ duration: 0.18 }}
                                     className="inline-block px-0.5 rounded"
@@ -729,7 +729,7 @@ export default function StoryReaderDemo() {
                                     <div className="w-6 h-6 rounded-lg flex items-center justify-center" style={{ background: `${story.color}18` }}>
                                       <span className="text-xs">🧠</span>
                                     </div>
-                                    <span className="font-bold text-xs" style={{ color: '#1A1A2E' }}>
+                                    <span className="font-bold text-xs" style={{ color: 'white' }}>
                                       Câu {quizIdx + 1}/{story.questions.length}
                                     </span>
                                   </div>
@@ -834,7 +834,7 @@ export default function StoryReaderDemo() {
                                   initial={{ scale: 0 }}
                                   animate={{ scale: 1 }}
                                   transition={{ delay: 0.4, type: 'spring', stiffness: 240 }}
-                                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full font-black text-[#1A1A2E] mb-4 text-sm"
+                                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full font-black mb-4 text-sm"
                                   style={{ background: '#FDC631', boxShadow: '0 4px 16px rgba(253,198,49,0.4)' }}
                                 >
                                   <Star size={13} weight="fill" color="#1A1A2E"/>
@@ -1035,10 +1035,10 @@ export default function StoryReaderDemo() {
 
             {/* hinge / base connector */}
             <div className="h-2 rounded-b-sm mx-[-2px]"
-              style={{ background: 'linear-gradient(to bottom, #2a2a2c, #1a1a1c)', boxShadow: '0 2px 4px rgba(0,0,0,0.4)' }}/>
+              style={{ background: 'linear-gradient(to bottom, #2a2a2c, #1a1a1c)', boxShadow: '0 2px 4px rgba(0,0,0,0.4), 0 0 8px rgba(128,176,255,0.1)' }}/>
             {/* keyboard base */}
             <div className="h-4 rounded-b-[10px] mx-[-16px] relative"
-              style={{ background: 'linear-gradient(to bottom, #e8e8e8, #d4d4d4)', boxShadow: '0 4px 12px rgba(0,0,0,0.2)' }}>
+              style={{ background: 'linear-gradient(to bottom, #e8e8e8, #d4d4d4)', boxShadow: '0 0 0 1px rgba(255,255,255,0.08), 0 4px 12px rgba(0,0,0,0.2)' }}>
               <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-20 h-1.5 rounded-full"
                 style={{ background: 'rgba(0,0,0,0.08)' }}/>
             </div>

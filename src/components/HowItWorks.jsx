@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import SpotlightCard from './SpotlightCard'
-import BorderGlow from './BorderGlow'
+import SpotlightCard from './effects/SpotlightCard'
 import { RocketLaunch } from '@phosphor-icons/react'
 
 const steps = [
@@ -15,7 +14,7 @@ export default function HowItWorks() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 })
 
   return (
-    <section className="py-32" style={{ background: 'rgba(255,255,255,0.35)', backdropFilter: 'blur(4px)' }} ref={ref}>
+    <section className="py-32" style={{ background: '#1A1A2E', backdropFilter: 'none' }} ref={ref}>
       <div className="max-w-6xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 28, filter: 'blur(6px)' }}
@@ -25,11 +24,11 @@ export default function HowItWorks() {
         >
           <div
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-[0.18em] mb-6"
-            style={{ background: 'rgba(50,128,69,0.1)', color: '#328045', border: '1px solid rgba(50,128,69,0.2)' }}
+            style={{ background: 'rgba(255,255,255,0.1)', color: '#6BCF7A', border: '1px solid rgba(50,128,69,0.2)' }}
           >
             <RocketLaunch size={13} weight="duotone"/> Cách hoạt động
           </div>
-          <h2 className="font-display font-black text-[#1A1A2E]" style={{ fontSize: 'clamp(28px, 4vw, 48px)' }}>
+          <h2 className="font-display font-black text-white" style={{ fontSize: 'clamp(28px, 4vw, 48px)' }}>
             Chỉ 4 bước để bé <span style={{ color: '#DD3A34' }}>yêu đọc sách</span>
           </h2>
         </motion.div>
@@ -37,7 +36,7 @@ export default function HowItWorks() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative items-stretch">
           {/* gradient connector line */}
           <div
-            className="hidden lg:block absolute top-22 left-[calc(12.5%+28px)] right-[calc(12.5%+28px)] h-0.5 z-0"
+            className="hidden lg:block absolute top-[65px] left-[calc(12.5%+28px)] right-[calc(12.5%+28px)] h-0.5 z-0"
             style={{ background: 'linear-gradient(90deg, #FDC631 0%, #DD3A34 33%, #0648D7 66%, #328045 100%)', opacity: 0.35 }}
           />
 
@@ -48,22 +47,20 @@ export default function HowItWorks() {
               animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
               transition={{ duration: 0.65, delay: i * 0.13, ease: [0.22, 1, 0.36, 1] }}
               className="relative z-10 h-full"
-              whileHover={{ y: -8, transition: { type: 'spring', stiffness: 300, damping: 20 } }}
+              whileHover={{ y: -6, scale: 1.03, transition: { type: 'spring', stiffness: 300, damping: 20 } }}
             >
-              <BorderGlow
-                backgroundColor="white"
-                borderRadius={24}
-                glowColor={step.glow}
-                colors={step.gc}
-                glowIntensity={0.85}
-                glowRadius={28}
-                edgeSensitivity={20}
-                style={{ height: '100%', boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.9), 0 4px 20px rgba(0,0,0,0.04)' }}
+              <div
+                style={{
+                  background: 'rgba(255,255,255,0.06)',
+                  borderRadius: 24,
+                  height: '100%',
+                  boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.15), 0 4px 20px rgba(0,0,0,0.3)',
+                }}
               >
                 <SpotlightCard
                   spotlightColor={`${step.color}20`}
                   borderColor="transparent"
-                  className="rounded-[22px] h-full"
+                  className="rounded-[22px] flex-1 h-full"
                 >
                 <div className="p-7 text-center flex flex-col h-full">
                   {/* pulse ring + emoji */}
@@ -75,7 +72,7 @@ export default function HowItWorks() {
                       transition={{ duration: 2.4, repeat: Infinity, delay: i * 0.4, ease: 'easeInOut' }}
                     />
                     <div
-                      className="w-16 h-16 rounded-full flex items-center justify-center border-4 border-white shadow-lg relative z-10"
+                      className="w-16 h-16 rounded-full flex items-center justify-center border-4 relative z-10" style={{ borderColor: 'rgba(255,255,255,0.2)' }}
                       style={{ background: step.color, boxShadow: `0 8px 24px ${step.color}50` }}
                     >
                       <span className="text-2xl">{step.emoji}</span>
@@ -84,21 +81,21 @@ export default function HowItWorks() {
 
                   <div
                     className="inline-flex items-center text-[10px] font-black px-2.5 py-1 rounded-full mb-4 mx-auto"
-                    style={{ background: `${step.color}18`, color: step.dark ? '#B8860B' : step.color }}
+                    style={{ background: `${step.color}18`, color: step.dark ? '#FFFFFF' : step.color }}
                   >
                     Bước {step.num}
                   </div>
 
-                  <h3 className="font-bold text-base text-[#1A1A2E] mb-3">{step.title}</h3>
-                  <p className="text-sm leading-relaxed flex-1" style={{ color: '#6B6B8A' }}>{step.desc}</p>
+                  <h3 className="font-bold text-base text-white mb-3">{step.title}</h3>
+                  <p className="text-sm leading-relaxed flex-1" style={{ color: 'rgba(255,255,255,0.6)' }}>{step.desc}</p>
 
                   {/* bottom accent line */}
-                  <div className="mt-5 h-0.5 rounded-full mx-auto w-12"
+                  <div className="mt-auto pt-5 h-0.5 rounded-full mx-auto w-12"
                     style={{ background: `linear-gradient(90deg, ${step.gc[0]}, ${step.gc[1]})` }}
                   />
                 </div>
                 </SpotlightCard>
-              </BorderGlow>
+              </div>
             </motion.div>
           ))}
         </div>

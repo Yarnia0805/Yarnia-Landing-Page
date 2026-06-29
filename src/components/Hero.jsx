@@ -1,7 +1,6 @@
 import { motion, useMotionValue, useSpring } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { useRef } from 'react'
-import WoollyMascot from './WoollyMascot'
 import { BookOpen, Sparkle, Star, ArrowRight } from '@phosphor-icons/react'
 import PixelSnow from './backgrounds/PixelSnow'
 import { useCanvasSupport } from '../hooks/useCanvasSupport'
@@ -13,20 +12,6 @@ const fadeUp = (delay = 0) => ({
     transition: { duration: 0.85, delay, ease: [0.22, 1, 0.36, 1] },
   },
 })
-
-function FloatingBadge({ children, className = '', style = {}, delay = 0 }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.7, y: 12 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      transition={{ delay, duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
-      className={`absolute px-4 py-2.5 rounded-2xl text-xs font-bold shadow-xl ${className}`}
-      style={style}
-    >
-      {children}
-    </motion.div>
-  )
-}
 
 function MagneticCTA({ href, children, primary = false }) {
   const ref = useRef(null)
@@ -74,7 +59,7 @@ export default function Hero() {
     <section
       ref={ref}
       className="relative min-h-[100dvh] flex items-center overflow-hidden pt-20"
-      style={{ background: 'rgba(244,243,237,0.15)' }}
+      style={{ background: '#1A1A2E' }}
     >
       {/* soft ambient blobs */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -94,22 +79,21 @@ export default function Hero() {
         <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="grid" x="0" y="0" width="48" height="48" patternUnits="userSpaceOnUse">
-              <circle cx="1.5" cy="1.5" r="1.5" fill="#1A1A2E" opacity="0.045"/>
+              <circle cx="1.5" cy="1.5" r="1.5" fill="rgba(255,255,255,0.06)"/>
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#grid)"/>
         </svg>
       </div>
 
-      <div className="relative max-w-6xl mx-auto px-6 w-full grid lg:grid-cols-2 gap-20 items-center py-24">
-        {/* ── left text ── */}
+      <div className="relative max-w-4xl mx-auto px-6 w-full py-24 text-center">
         <div>
           <motion.div
             variants={fadeUp(0)}
             initial="hidden"
             animate={inView ? 'visible' : 'hidden'}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-[0.18em] mb-8"
-            style={{ background: 'rgba(253,198,49,0.18)', color: '#B8860B', border: '1px solid rgba(253,198,49,0.35)' }}
+            style={{ background: 'rgba(253,198,49,0.2)', color: '#FDC631', border: '1px solid rgba(253,198,49,0.35)' }}
           >
             <Sparkle size={12} weight="duotone"/>
             Nền tảng kể chuyện #1 cho trẻ Việt
@@ -120,7 +104,7 @@ export default function Hero() {
             initial="hidden"
             animate={inView ? 'visible' : 'hidden'}
             className="font-display font-black leading-[1.08] tracking-tight mb-7"
-            style={{ fontSize: 'clamp(38px, 5.5vw, 70px)', color: '#1A1A2E' }}
+            style={{ fontSize: 'clamp(38px, 5.5vw, 70px)', color: '#FFFFFF' }}
           >
             Thế giới truyện{' '}
             <span className="relative inline-block">
@@ -136,11 +120,11 @@ export default function Hero() {
             variants={fadeUp(0.2)}
             initial="hidden"
             animate={inView ? 'visible' : 'hidden'}
-            className="text-lg leading-[1.8] mb-10 max-w-md"
-            style={{ color: '#6B6B8A' }}
+            className="text-lg leading-[1.8] mb-10 max-w-xl mx-auto"
+            style={{ color: 'rgba(255,255,255,0.6)' }}
           >
             Yarnia mang đến 360+ câu chuyện tiếng Việt được biên soạn bởi chuyên gia,
-            giúp bé <strong style={{ color: '#1A1A2E' }}>yêu thích đọc sách</strong>, phát triển
+            giúp bé <strong style={{ color: '#FDC631' }}>yêu thích đọc sách</strong>, phát triển
             ngôn ngữ và trí tưởng tượng từ 3–12 tuổi.
           </motion.p>
 
@@ -148,7 +132,7 @@ export default function Hero() {
             variants={fadeUp(0.3)}
             initial="hidden"
             animate={inView ? 'visible' : 'hidden'}
-            className="flex flex-wrap gap-4 mb-12"
+            className="flex justify-center flex-wrap gap-4 mb-12"
           >
             <MagneticCTA href="#" primary>
               <BookOpen size={18}/>
@@ -163,7 +147,7 @@ export default function Hero() {
             variants={fadeUp(0.4)}
             initial="hidden"
             animate={inView ? 'visible' : 'hidden'}
-            className="flex items-center gap-7 flex-wrap"
+            className="flex items-center justify-center gap-7 flex-wrap"
           >
             <div className="flex items-center gap-3">
               <div className="flex -space-x-2.5">
@@ -178,87 +162,26 @@ export default function Hero() {
                 ))}
               </div>
               <div>
-                <div className="font-bold text-sm" style={{ color: '#1A1A2E' }}>12,000+ gia đình</div>
-                <div className="text-xs" style={{ color: '#6B6B8A' }}>đang tin dùng Yarnia</div>
+                <div className="font-bold text-sm" style={{ color: '#FDC631' }}>12,000+ gia đình</div>
+                <div className="text-xs" style={{ color: 'rgba(255,255,255,0.6)' }}>đang tin dùng Yarnia</div>
               </div>
             </div>
-            <div className="h-8 w-px" style={{ background: 'rgba(26,26,46,0.1)' }}/>
+            <div className="h-8 w-px" style={{ background: 'rgba(255,255,255,0.12)' }}/>
             <div className="flex items-center gap-1.5">
               <div className="flex items-center gap-0.5">
                 {[...Array(5)].map((_,i) => <Star key={i} size={14} weight="fill" color="#FDC631"/>)}
               </div>
-              <span className="text-sm font-bold" style={{ color: '#1A1A2E' }}>4.9</span>
-              <span className="text-sm" style={{ color: '#6B6B8A' }}>/5 đánh giá</span>
+              <span className="text-sm font-bold" style={{ color: '#FDC631' }}>4.9</span>
+              <span className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>/5 đánh giá</span>
             </div>
           </motion.div>
-        </div>
-
-        {/* ── right mascot ── */}
-        <div className="relative flex items-center justify-center h-[560px]">
-          <div className="absolute w-80 h-80 rounded-full opacity-35"
-               style={{ background: 'radial-gradient(circle, #FDC631 0%, transparent 70%)' }}/>
-          <div className="absolute w-48 h-48 rounded-full opacity-20 translate-x-24 -translate-y-16"
-               style={{ background: 'radial-gradient(circle, #F279A6 0%, transparent 70%)' }}/>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.65, y: 30 }}
-            animate={inView ? { opacity: 1, scale: 1, y: 0 } : {}}
-            transition={{ duration: 1.0, delay: 0.25, ease: [0.34, 1.56, 0.64, 1] }}
-            className="animate-float relative z-10"
-          >
-            <WoollyMascot size={280}/>
-          </motion.div>
-
-          <FloatingBadge
-            className="left-0 top-24 text-white"
-            style={{ background: '#0648D7', boxShadow: '0 8px 24px rgba(6,72,215,0.4)' }}
-            delay={0.7}
-          >
-            <div className="flex items-center gap-2.5">
-              <span className="text-xl">📚</span>
-              <div>
-                <div className="text-[10px] opacity-75">Cổ tích</div>
-                <div className="font-black text-sm">Tấm Cám</div>
-              </div>
-            </div>
-          </FloatingBadge>
-
-          <FloatingBadge
-            className="right-0 top-28 text-white"
-            style={{ background: '#328045', boxShadow: '0 8px 24px rgba(50,128,69,0.4)' }}
-            delay={0.85}
-          >
-            <div className="flex items-center gap-2.5">
-              <span className="text-xl">🦋</span>
-              <div>
-                <div className="text-[10px] opacity-75">Ngụ ngôn</div>
-                <div className="font-black text-sm">Thỏ & Rùa</div>
-              </div>
-            </div>
-          </FloatingBadge>
-
-          <FloatingBadge
-            className="left-6 bottom-28 text-[#1A1A2E]"
-            style={{ background: '#FDC631', boxShadow: '0 8px 24px rgba(253,198,49,0.5)' }}
-            delay={1.0}
-          >
-            🔥 Chuỗi 7 ngày!
-          </FloatingBadge>
-
-          <FloatingBadge
-            className="right-2 bottom-20 text-white"
-            style={{ background: '#9273E4', boxShadow: '0 8px 24px rgba(146,115,228,0.45)' }}
-            delay={1.1}
-          >
-            ⭐ +50 XP mới
-          </FloatingBadge>
         </div>
       </div>
 
       {/* wave divider */}
       <div className="absolute bottom-0 left-0 right-0 pointer-events-none">
         <svg viewBox="0 0 1440 72" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full block">
-          <path d="M0 72 L0 36 Q240 8 480 28 Q720 48 960 20 Q1200 0 1440 16 L1440 72Z" fill="white"/>
+          <path d="M0 72 L0 36 Q240 8 480 28 Q720 48 960 20 Q1200 0 1440 16 L1440 72Z" fill="#1A1A2E"/>
         </svg>
       </div>
     </section>

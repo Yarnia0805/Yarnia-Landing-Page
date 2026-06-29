@@ -3,7 +3,7 @@ import { useInView } from 'react-intersection-observer'
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 import { useCallback } from 'react'
-import SpotlightCard from './SpotlightCard'
+import SpotlightCard from './effects/SpotlightCard'
 import { ArrowLeft, ArrowRight, Books } from '@phosphor-icons/react'
 
 const categories = [
@@ -57,11 +57,11 @@ function CategoryCard({ cat, index, inView }) {
 
           <div className="relative z-10 flex flex-col flex-1">
             <span className="text-5xl mb-5 block">{cat.emoji}</span>
-            <h3 className="font-display font-black text-2xl mb-2" style={{ color: cat.dark ? '#1A1A2E' : 'white' }}>
+            <h3 className="font-display font-black text-2xl mb-2" style={{ color: 'white' }}>
               {cat.title}
             </h3>
             <p className="text-sm leading-relaxed mb-5 flex-1"
-               style={{ color: cat.dark ? 'rgba(26,26,46,0.75)' : 'rgba(255,255,255,0.82)' }}>
+               style={{ color: 'rgba(255,255,255,0.82)' }}>
               {cat.desc}
             </p>
             <div className="flex items-center justify-between">
@@ -69,7 +69,7 @@ function CategoryCard({ cat, index, inView }) {
                 className="inline-flex items-center text-xs font-bold px-3 py-1.5 rounded-full"
                 style={{
                   background: cat.dark ? 'rgba(26,26,46,0.14)' : 'rgba(255,255,255,0.22)',
-                  color: cat.dark ? '#1A1A2E' : 'white',
+                  color: 'white',
                 }}
               >
                 {cat.count}
@@ -99,7 +99,7 @@ export default function StoryCategories() {
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi])
 
   return (
-    <section id="stories" className="py-32 overflow-hidden" style={{ background: 'rgba(255,255,255,0.35)', backdropFilter: 'blur(4px)' }} ref={ref}>
+    <section id="stories" className="py-32 overflow-hidden" style={{ background: 'transparent', backdropFilter: 'none' }} ref={ref}>
       <div className="max-w-6xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 28 }}
@@ -114,7 +114,7 @@ export default function StoryCategories() {
             >
               <Books size={13} weight="duotone"/> Kho truyện phong phú
             </div>
-            <h2 className="font-display font-black text-[#1A1A2E]" style={{ fontSize: 'clamp(28px, 4vw, 48px)' }}>
+            <h2 className="font-display font-black text-white" style={{ fontSize: 'clamp(28px, 4vw, 48px)' }}>
               360+ câu chuyện,{' '}
               <span style={{ color: '#DD3A34' }}>6 thể loại</span> đặc sắc
             </h2>
@@ -124,7 +124,7 @@ export default function StoryCategories() {
               onClick={scrollPrev}
               whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.94 }}
               className="w-11 h-11 rounded-full flex items-center justify-center font-bold border-2"
-              style={{ borderColor: 'rgba(26,26,46,0.15)', color: '#1A1A2E', background: 'white' }}
+              style={{ borderColor: 'rgba(255,255,255,0.25)', color: 'white', background: 'rgba(255,255,255,0.1)' }}
             >
               <ArrowLeft size={18} weight="bold"/>
             </motion.button>
@@ -160,7 +160,7 @@ export default function StoryCategories() {
                 className="flex items-center gap-2 px-5 py-2.5 rounded-full font-bold text-sm shrink-0 mx-2 cursor-pointer"
                 style={{
                   background: cat.bg,
-                  color: cat.dark ? '#1A1A2E' : 'white',
+                  color: 'white',
                   boxShadow: `0 4px 12px ${cat.bg}40`,
                 }}
               >
@@ -178,7 +178,7 @@ export default function StoryCategories() {
                 className="flex items-center gap-2 px-5 py-2.5 rounded-full font-bold text-sm shrink-0 mx-2 cursor-pointer"
                 style={{
                   background: cat.bg,
-                  color: cat.dark ? '#1A1A2E' : 'white',
+                  color: 'white',
                   boxShadow: `0 4px 12px ${cat.bg}40`,
                 }}
               >
@@ -202,7 +202,7 @@ export default function StoryCategories() {
             whileHover={{ y: -2, scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             className="inline-flex items-center gap-2 text-sm font-bold px-6 py-3 rounded-full border-2 transition-colors"
-            style={{ borderColor: 'rgba(26,26,46,0.15)', color: '#1A1A2E' }}
+            style={{ borderColor: 'rgba(255,255,255,0.25)', color: 'white' }}
           >
             Xem toàn bộ kho truyện <ArrowRight size={14} weight="bold"/>
           </motion.a>

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Envelope, Phone, CheckCircle, ArrowRight, Warning, Sparkle, Lock } from '@phosphor-icons/react'
-import SpotlightCard from './SpotlightCard'
+import SpotlightCard from './effects/SpotlightCard'
 import GridMotion from './backgrounds/GridMotion'
 
 const INTERESTS = ['Kho truyện', 'Kid Mode', 'Gamification', 'Báo cáo phụ huynh', 'Bảng giá']
@@ -51,7 +51,7 @@ export default function Contact() {
     }
   }
 
-  const inputClass = 'w-full bg-white rounded-xl px-4 py-3 text-sm text-[#1A1A2E] placeholder:text-[#9090B0] outline-none transition-all duration-200'
+  const inputClass = 'w-full bg-[rgba(255,255,255,0.08)] rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#9090B0] outline-none transition-all duration-200'
   const inputStyle = { border: '1.5px solid rgba(0,0,0,0.08)', fontFamily: 'var(--font-body)' }
   const inputFocusStyle = { borderColor: '#FDC63166', boxShadow: '0 0 0 3px rgba(253,198,49,0.12)' }
 
@@ -136,7 +136,7 @@ export default function Contact() {
           >
             <div
               className="p-1.5 rounded-[28px]"
-              style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)' }}
+              style={{ background: '#1A1A2E', border: '1px solid rgba(255,255,255,0.1)' }}
             >
               <div className="rounded-[22px] p-8" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(12px)' }}>
                 <AnimatePresence mode="wait">
@@ -164,7 +164,7 @@ export default function Contact() {
                         onClick={() => setStatus('idle')}
                         whileHover={{ scale: 1.04 }}
                         whileTap={{ scale: 0.97 }}
-                        className="mt-6 px-6 py-2.5 rounded-full text-sm font-bold text-[#1A1A2E]"
+                        className="mt-6 px-6 py-2.5 rounded-full text-sm font-bold text-white"
                         style={{ background: '#FDC631' }}
                       >
                         Đăng ký thêm
@@ -192,7 +192,7 @@ export default function Contact() {
                               className="px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-200"
                               style={{
                                 background: form.interest === item ? '#FDC631' : 'rgba(255,255,255,0.08)',
-                                color: form.interest === item ? '#1A1A2E' : 'rgba(255,255,255,0.7)',
+                                color: form.interest === item ? '#FDC631' : 'rgba(255,255,255,0.7)',
                                 border: `1px solid ${form.interest === item ? '#FDC631' : 'rgba(255,255,255,0.12)'}`,
                               }}
                             >
@@ -231,7 +231,7 @@ export default function Contact() {
                         whileHover={{ scale: status === 'loading' ? 1 : 1.02, boxShadow: '0 8px 28px rgba(253,198,49,0.45)' }}
                         whileTap={{ scale: 0.97 }}
                         transition={{ type: 'spring', stiffness: 280, damping: 22 }}
-                        className="w-full flex items-center justify-center gap-2 py-4 rounded-2xl font-bold text-[#1A1A2E] text-base"
+                        className="w-full flex items-center justify-center gap-2 py-4 rounded-2xl font-bold text-white text-base"
                         style={{ background: '#FDC631', opacity: status === 'loading' ? 0.7 : 1 }}
                       >
                         {status === 'loading' ? (
